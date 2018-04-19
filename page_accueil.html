@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+	</head>
+	<body>
+		{erreur}
+		<p/>
+		<div>
+			<br>
+			<br>
+			<br>
+			<br>
+		<form action="/req_identifier" method="GET">
+			<input style='font-size: 16px;' type="text" name="pseudo" value="{pseudo}" placeholder="Entrez votre pseudonyme"> 
+			<br>
+			<br>
+			<input style='font-size: 16px;' type="password" name="password" value="" placeholder="Entrez votre mot de passe">
+			<br>
+			<br>
+			<input type="submit" name="action" value="Connexion" class = "bouton1">
+		</form>
+		<br>
+		<form action="/req_afficher_formulaire_inscription" method="GET">
+			<button name="action" value="creer" class = "bouton2">S'inscrire</button>
+		</form>
+		</div>
+	<body>
+</html>
