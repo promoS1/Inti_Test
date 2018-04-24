@@ -21,7 +21,8 @@ var trait = function (req, res, query) {
 	var listeMembres;
 	var i,j;
 	var trouve;
-
+	var tout;
+	pseudos = "";
 	// ON LIT LES COMPTES EXISTANTS
 
 	contenu_fichier = fs.readFileSync("membres.json", 'utf-8');    
@@ -54,12 +55,14 @@ var trait = function (req, res, query) {
 
 	} else {
 		// SI IDENTIFICATION OK, ON ENVOIE PAGE ACCUEIL MEMBRE
-		pseudos = ""
 		page = fs.readFileSync('page_home.html', 'UTF-8');
-		for(j=0;j<listeMembres.length ;j++) {
-		pseudos = pseudos+ "<p>" +listeMembres[j].pseudo;
+		for(j = 0 ; j < listeMembres.length ; j++) {
+		tout="";
+		tout =j + " joueur "  +listeMembres[j].pseudo +"\n";
+		pseudos = pseudos + tout +"<a href=\"\"> defier <a> " + "<br>"  ;
 		}
-
+		
+	
 		marqueurs = {};
 		marqueurs.pseudo = query.pseudo;
 		marqueurs.pseudos = pseudos;
