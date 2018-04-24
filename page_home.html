@@ -1,18 +1,90 @@
 <!DOCTYPE HTML>
 <html>
-	<head>
-		<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
-	</head>
-	<body>
-		{erreur}
-		<p/>
-		<h1>Bienvenue dans Inti'Test</h1>
-		<p>
-		<h3> Amis </h3>
-	<a href=""> {pseudos} </a>
-		
-			<br>
-			<br>
-		</div>
-	<body>
+<head>
+<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+<style>
+#gauche {
+float:left; /* Le cadre sort du flux */
+border:2px solid gray;
+height:500px;
+width:20%;
+margin-right:-2px;
+}
+
+#milieu {
+float:left;
+border:2px solid gray;
+height:500px;
+width:20%; 
+margin-right:-2px;
+}
+
+#droite {
+float:left;
+border:2px solid gray;
+height:500px;
+width:20%;
+}
+
+#deb{
+float:top, left ;
+border:2px solid gray;
+height:100%;
+width:100%;
+background-color:#ddd;
+}
+
+#mil{
+float:top, left ;
+border:2px solid gray;
+height:100%;
+width:100%;
+background-color:#ddd;
+
+}
+ #droit {
+float:top, left ;
+border:2px solid gray;
+height:50%;
+width:100%;
+background-color:#ddd;
+}
+</style>
+</head>
+
+<body>
+{erreur}
+<h1> Bienvenue a Inti'Test </h1>
+<div id="gauche"> <!-- Sort du flux car float:left-->
+<h2>Touts Les Amis </h2>
+<div id="deb" >{pseudos}</div>
+</div>
+
+<div id="milieu"> <!-- Sort du flux car float:left-->
+<h2>regles du Jeu</h2>
+<div id="mil" >
+<h3>les regle du Jeu son </h3>
+<p>1- vous devez rependre au questions. </p>
+<p>2- vous pouvez defié vos amis en leur envoyent des questions.   </p>
+<p>3- vos amis peuvent vous defié en vous envoyent des questions.  </p>
+<p>chaque Joueur ce doit d'etre s'insaire dans ses repanse, </p>
+<p>le but des defies est de pouvoir rependre aux questions comme la fait le defieur. </p>
+<p> </p>
+</div>
+</div>
+<div id="droite"> <!-- Sort du flux car float:left-->
+<h2>Jeu</h2>
+
+<div id="droit" >
+<h3> Joueur a defier </h3>
+</div>
+<div id="droit" >
+
+<h3>Joueur qui vous deffie </h3>
+</div>
+</div>
+
+</div>
+
+<body>
 </html>
