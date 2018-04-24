@@ -13,8 +13,9 @@ var trait = function(req, res, query) {
 
 	page = fs.readFileSync('page_home.html', 'utf-8');
 
-
-
+    marqueurs = {}; 
+    marqueurs.pseudo = query.pseudo;
+    page = page.supplant(marqueurs);
 
 	res.writeHead(200, {'Content-Type': 'text/html'});
 	res.write(page);

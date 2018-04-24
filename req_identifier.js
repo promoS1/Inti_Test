@@ -20,7 +20,9 @@ var trait = function (req, res, query) {
 	var contenu_fichier;
 	var tout;
 	var listeMembres;
-	var i,j;
+	var i,j,h;
+	var nom;
+	var contenu;
 	var trouve;
 
 	// ON LIT LES COMPTES EXISTANTS
@@ -60,18 +62,37 @@ var trait = function (req, res, query) {
 		for(j=0;j<listeMembres.length ;j++) {
 			tout = ""
 			tout =j + "joueur" + listeMembres[j].pseudo +"\n";
-			pseudos = pseudos + tout + "<a href=req_defier>defier</a> " + "<br>";
+			pseudos = pseudos + tout + "<a href=req_defier?pseudo="+query.pseudo+">defier</a> " + "<br>";
+			if (query.pseudo === listeMembres[j].length) {
+				var profil_user = {
+					"id":1,
+					"score":0,
+					"deja_joué":[
+								{
+								"id":1,
+								"question_posé":[10,22,11],
+								"question_recu":[40,50,60]
+								},
+								]
+				}
+			}
+						
 		}
+		contenu = JSON.stringify(profil_user);
+		fs.writeFileSync(query.pseudo+".json",contenu,"utf-8");
+	}
+		
 
 		marqueurs = {};
 		marqueurs.pseudo = query.pseudo;
 		marqueurs.pseudos = pseudos;
 		page = page.supplant(marqueurs);
-	}
+	
 
 	res.writeHead(200, {'Content-Type': 'text/html'});
 	res.write(page);
 	res.end();
+
 };
 
 //---------------------------------------------------------------------------
