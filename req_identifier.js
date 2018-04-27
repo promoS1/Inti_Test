@@ -16,6 +16,7 @@ var trait = function (req, res, query) {
 	var pseudos;
 	var password;
 	var page;
+	var profil_user 
 	var membre;
 	var contenu_fichier;
 	var tout;
@@ -62,18 +63,12 @@ var trait = function (req, res, query) {
 		for(j=0;j<listeMembres.length ;j++) {
 			tout = ""
 			tout =j + "joueur" + listeMembres[j].pseudo +"\n";
-			pseudos = pseudos + tout + "<a href=req_defier?pseudo="+query.pseudo+">defier</a> " + "<br>";
-			if (query.pseudo === listeMembres[j].length) {
-				var profil_user = {
-					"id":1,
+			pseudos = pseudos + tout + "<a href=req_cont_defi?pseudo="+query.pseudo+">defier</a> " + "<br>";
+			if (query.pseudo === listeMembres[j].pseudo) {
+				console.log("coucou");
+				profil_user = {
+					"n":1,
 					"score":0,
-					"deja_joué":[
-								{
-								"id":1,
-								"question_posé":[10,22,11],
-								"question_recu":[40,50,60]
-								},
-								]
 				}
 			}
 						
