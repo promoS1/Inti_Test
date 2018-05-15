@@ -25,7 +25,7 @@ var trait = function (req, res, query) {
 	for(j=0;j<listeMembres.length ;j++) {
             tout = "";
             tout =j + " joueur " + listeMembres[j].pseudo +"\n";
-            pseudos = pseudos + tout + "<a href=req_defier?pseudo="+query.pseudo+">defier</a> " + "<br>";
+            pseudos = pseudos + tout +"<a href=req_cont_defi?pseudo="+query.pseudo+">defier</a> " + "<br>";
 	}
 
     marqueurs = {}; 

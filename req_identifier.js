@@ -16,7 +16,7 @@ var trait = function (req, res, query) {
 	var pseudos;
 	var password;
 	var page;
-	var profil_user 
+	var profil_user; 
 	var membre;
 	var contenu_fichier;
 	var tout;
@@ -24,11 +24,18 @@ var trait = function (req, res, query) {
 	var i,j,h;
 	var nom;
 	var contenu;
+	var attente_r;
+	var attente_q;
 	var trouve;
+	var donne;
+	var attente;	
+	var ma_reponse;
+	var contacts;
+	var score;
 
 	// ON LIT LES COMPTES EXISTANTS
 
-	contenu_fichier = fs.readFileSync("membres.json", 'utf-8');    
+	contenu_fichier = fs.readFileSync("membres.json" , "utf-8");    
 	listeMembres = JSON.parse(contenu_fichier);
 
 	// ON VERIFIE QUE LE PSEUDO/PASSWORD EXISTE
@@ -58,31 +65,43 @@ var trait = function (req, res, query) {
 
 	} else {
 		// SI IDENTIFICATION OK, ON ENVOIE PAGE ACCUEIL MEMBRE
-		pseudos = ""
-		page = fs.readFileSync('page_home.html', 'UTF-8');
-		for(j=0;j<listeMembres.length ;j++) {
-			tout = ""
-			tout =j + "joueur" + listeMembres[j].pseudo +"\n";
-			pseudos = pseudos + tout + "<a href=req_cont_defi?pseudo="+query.pseudo+">defier</a> " + "<br>";
-			if (query.pseudo === listeMembres[j].pseudo) {
-				console.log("coucou");
-				profil_user = {
-					"n":1,
-					"score":0,
-				}
-			}
-						
-		}
-		contenu = JSON.stringify(profil_user);
-		fs.writeFileSync(query.pseudo+".json",contenu,"utf-8");
-	}
-		
+		pseudos = "";
+		contacts= "";
 
-		marqueurs = {};
-		marqueurs.pseudo = query.pseudo;
-		marqueurs.pseudos = pseudos;
-		page = page.supplant(marqueurs);
-	
+			page = fs.readFileSync('page_home.html', 'UTF-8');
+
+		profil_user = fs.readFileSync(query.pseudo+".json",  "UTF-8");
+		contenu = JSON.parse(profil_user);
+
+
+
+
+		for(j = 0 ; j <listeMembres.length ; j++ ) {
+			tout = "";
+			tout =(j+1) + " joueur " + listeMembres[j].pseudo +"\n";
+			pseudos = pseudos + tout + "<a href=req_cont_defi?pseudo="+query.pseudo+"avec"+listeMembres[j].pseudo+">defier</a> " + "<br>";
+
+		}for(h = 0 ; h < contenu.length ; h++) {
+			attente  	=	contenu[h].contact  +"\n";
+			attente_r	=	contenu[h].reponse; 
+			ma_reponse	=	contenu[h].ra;
+			attente_q	=	contenu[h].questions;
+			score		=	contenu[h].score;
+			donne 		=	(h+1) + " Joueur " + attente +"votre score est de " + score +" Reponse Attendu " + attente_r + " Question " + attente_q + "\n" ; 
+			contacts	= contacts +" "+ donne +"<br> " ;
+	 	
+
+		}
+	}
+
+
+	marqueurs = {};
+	marqueurs.attente_r = contacts;
+	marqueurs.attente_q = contacts;
+	marqueurs.pseudo = query.pseudo;
+	marqueurs.pseudos = pseudos;
+	page = page.supplant(marqueurs);
+
 
 	res.writeHead(200, {'Content-Type': 'text/html'});
 	res.write(page);
