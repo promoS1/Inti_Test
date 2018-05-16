@@ -32,7 +32,7 @@ var trait = function (req, res, query) {
 	var ma_reponse;
 	var contacts;
 	var score;
-
+	var opposant;
 	// ON LIT LES COMPTES EXISTANTS
 
 	contenu_fichier = fs.readFileSync("membres.json" , "utf-8");    
@@ -67,6 +67,7 @@ var trait = function (req, res, query) {
 		// SI IDENTIFICATION OK, ON ENVOIE PAGE ACCUEIL MEMBRE
 		pseudos = "";
 		contacts= "";
+		opposant="";
 
 			page = fs.readFileSync('page_home.html', 'UTF-8');
 
@@ -75,12 +76,12 @@ var trait = function (req, res, query) {
 
 
 
-
 		for(j = 0 ; j <listeMembres.length ; j++ ) {
 			tout = "";
 			tout =(j+1) + " joueur " + listeMembres[j].pseudo +"\n";
-			pseudos = pseudos + tout + "<a href=req_cont_defi?pseudo="+query.pseudo+"avec"+listeMembres[j].pseudo+">defier</a> " + "<br>";
-
+			pseudos = pseudos + tout + "<a href=req_cont_defi?pseudo="+query.pseudo+"&opposant="+listeMembres[j].pseudo+">defier</a> " + "<br>";
+			opposant = listeMembres[j].pseudo ;
+			console.log(opposant);
 		}for(h = 0 ; h < contenu.length ; h++) {
 			attente  	=	contenu[h].contact  +"\n";
 			attente_r	=	contenu[h].reponse; 
