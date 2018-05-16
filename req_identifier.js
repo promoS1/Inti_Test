@@ -75,14 +75,21 @@ var trait = function (req, res, query) {
 		contenu = JSON.parse(profil_user);
 
 
-
-		for(j = 0 ; j <listeMembres.length ; j++ ) {
+		// AFFICHAGE DES MEMBRES A DEFIER
+		var pseudo_j = "";
+		for(j = 0 ; j <listeMembres.length ; j++ ) {	
+		if(query.pseudo === listeMembres[j].pseudo) {
+			 pseudo_j = listeMembres[j].pseudo;
+			
+		}
 			tout = "";
 			tout =(j+1) + " joueur " + listeMembres[j].pseudo +"\n";
-			pseudos = pseudos + tout + "<a href=req_cont_defi?pseudo="+query.pseudo+"&opposant="+listeMembres[j].pseudo+">defier</a> " + "<br>";
-			opposant = listeMembres[j].pseudo ;
-			console.log(opposant);
-		}for(h = 0 ; h < contenu.length ; h++) {
+			
+			 pseudos = pseudos + tout + "<a href=req_cont_defi?pseudo="+query.pseudo+"&opposant="+listeMembres[j].pseudo+">defier</a> " + "<br>";
+				opposant = listeMembres[j].pseudo ;
+		}
+		// AFFICHAGE DES MEMBRES EN ATTENTE
+		for(h = 0 ; h < contenu.length ; h++) {
 			attente  	=	contenu[h].contact  +"\n";
 			attente_r	=	contenu[h].reponse; 
 			ma_reponse	=	contenu[h].ra;
