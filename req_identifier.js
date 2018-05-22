@@ -69,26 +69,23 @@ var trait = function (req, res, query) {
 		contacts= "";
 		opposant="";
 
-			page = fs.readFileSync('page_home.html', 'UTF-8');
+			page = fs.readFileSync('page_home.html','UTF-8');
 
-		profil_user = fs.readFileSync(query.pseudo+".json",  "UTF-8");
+		profil_user = fs.readFileSync(query.pseudo+".json","UTF-8");
 		contenu = JSON.parse(profil_user);
 
 
-		// AFFICHAGE DES MEMBRES A DEFIER
-		var pseudo_j = "";
-		for(j = 0 ; j <listeMembres.length ; j++ ) {	
-		if(query.pseudo === listeMembres[j].pseudo) {
-			 pseudo_j = listeMembres[j].pseudo;
-			
-		}
+		// AFFICHAGE DES MEMBES A DEFIER
+
+		for(j = 0 ; j <listeMembres.length ; j++ ) {
 			tout = "";
 			tout =(j+1) + " joueur " + listeMembres[j].pseudo +"\n";
-			
-			 pseudos = pseudos + tout + "<a href=req_cont_defi?pseudo="+query.pseudo+"&opposant="+listeMembres[j].pseudo+">defier</a> " + "<br>";
-				opposant = listeMembres[j].pseudo ;
+			if (query.pseudo !== listeMembres[j].pseudo){
+			pseudos = pseudos + tout + "<a href=req_cont_defi?pseudo="+query.pseudo+"&opposant="+listeMembres[j].pseudo+">defier</a> " + "<br>";
+			}opposant = listeMembres[j].pseudo ;
+			console.log(opposant);
 		}
-		// AFFICHAGE DES MEMBRES EN ATTENTE
+		//AFFICHAGE DES MEMBRES EN ATTENTE 
 		for(h = 0 ; h < contenu.length ; h++) {
 			attente  	=	contenu[h].contact  +"\n";
 			attente_r	=	contenu[h].reponse; 

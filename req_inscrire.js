@@ -85,13 +85,6 @@ var trait = function (req, res, query) {
 
 		fs.writeFileSync("membres.json", contenu_fichier, 'utf-8');
 		profil_user =[
-					{
-					"contact":"",
-					"score":0,
-					"questions":[0],
-					"ra":"",
-					"reponse":""
-					},
 					]
 			
 		contenu = JSON.stringify(profil_user);
