@@ -1,6 +1,6 @@
-//===============
-// req_defier
-//===============
+//====================
+// req_init_defi.js
+//===================
 
 "use strict"; 
 
@@ -16,6 +16,8 @@ var trait = function (req, res, query) {
 	var contenu;
 	var profil_opposant;
 	var contenu_opposant;
+	var choix_question;
+	var contenu_questions;
 	var question;
 	var h,a;
 	var trouver;
@@ -81,7 +83,13 @@ var trait = function (req, res, query) {
 		console.log( contenu_opposant);
 	}
 
+	// ON OUVRE LE JSON DES QUESTIONS 
 
+		console.log("bite");
+		contenu_questions = fs.readFilesSync("questions.json","UTF-8");
+		choix_question = JSON.parse(contenu_questions);
+		
+		question = choix_question[0].question;
 
 	marqueurs = {};
 	marqueurs.question = question;
