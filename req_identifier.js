@@ -81,7 +81,7 @@ var trait = function (req, res, query) {
 			tout = "";
 			tout =(j+1) + " joueur " + listeMembres[j].pseudo +"\n";
 			if (query.pseudo !== listeMembres[j].pseudo){
-			pseudos = pseudos + tout + "<a href=req_cont_defi?pseudo="+query.pseudo+"&opposant="+listeMembres[j].pseudo+">defier</a> " + "<br>";
+			pseudos = pseudos + tout + "<a href=req_init_defi?pseudo="+query.pseudo+"&opposant="+listeMembres[j].pseudo+">defier</a> " + "<br>";
 			}opposant = listeMembres[j].pseudo ;
 			console.log(opposant);
 		}

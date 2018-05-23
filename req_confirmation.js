@@ -21,7 +21,7 @@ var trait = function (req, res, query) {
     listeMembres = JSON.parse(contenu_fichier);
 
 	pseudos="";
-	page = fs.readFileSync('page_home.html', 'utf-8');
+	page = fs.readFileSync('page_confirmation.html', 'utf-8');
 	for(j=0;j<listeMembres.length ;j++) {
             tout = "";
             tout =j + " joueur " + listeMembres[j].pseudo +"\n";

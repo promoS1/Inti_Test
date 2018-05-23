@@ -20,6 +20,7 @@ var req_afficher_formulaire_inscription = require("./req_afficher_formulaire_ins
 var req_inscrire = require("./req_inscrire.js");
 var req_identifier = require("./req_identifier.js");
 var req_cont_defi = require("./req_cont_defi.js");
+var req_init_defi = require("./req_init_defi.js");
 var req_repond_q = require("./req_repond_q.js");
 var req_reponse_q = require("./req_reponse_q.js");
 var req_poser_q = require("./req_poser_q.js");
@@ -59,6 +60,9 @@ var traite_requete = function (req, res) {
 				break;
 			case '/req_identifier':
 				req_identifier(req, res, query);
+				break;
+			case '/req_init_defi':
+				req_init_defi(req, res, query);
 				break;
 			case '/req_cont_defi':
 				req_cont_defi(req,res, query);
