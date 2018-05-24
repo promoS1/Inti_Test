@@ -20,14 +20,14 @@ var trait = function (req, res, query) {
 	var contenu_question;
 	var choix_question;
 	var reponse1;
-	var reponse2;
+	var reponse;
 	var reponse3;
 	var question;
-	var h,a;
+	var h,a,i,j;
 	var trouver;
 	var nv_opposant;
 	var nv_pseudo;
-
+	var nbr_question;
 	page = fs.readFileSync('page_repond_qn.html', 'utf-8');
 	console.log(query.pseudo);
 	console.log(query.opposant);
@@ -89,21 +89,39 @@ var trait = function (req, res, query) {
 		afficher = true;
 	}
 	if (afficher === true) {
+
 	contenu_question = fs.readFileSync("questions.json","utf-8");
-	choix_question = JSON.parse(contenu_question)
-	question = choix_question[0].question
-	//for ( var j =0; j < choix_question[0].reponses.length; j++) {
-	reponse1 = choix_question[0].reponses[0];
-	reponse2 = choix_question[0].reponses[1];
-	reponse3 = choix_question[0].reponses[2];
-//	}
+	question = JSON.parse(contenu_question)
+	console.log(question);
+
+	nbr_question = question.length;
+	console.log("il ya "+ nbr_question+" questions ");
+	
+	i= Math.floor(Math.random()* nbr_question );
+	console.log("choix aleatoire"+i);
+	
+	choix_question = question[i].question;
+	console.log("la question choisie est : " + choix_question);
+
+	for ( j =0; j < question[i].reponses.length; j++) {
+	reponse1 = question[i].reponses[j];
+	console.log("reponse "+ j +" est " + reponse1 );
+	reponse = reponse + "<a href=req_confirmation?pseudo=" + query.pseudo + "&opposant=" +query.opposant +"&reponse="+reponse1+"><button>"+reponse1+"</button></a>";
+	console.log("reponse lien ! " + reponse);
+
+
+
+
+	//reponse2 = chomx_question[0].reponses[1];
+	//reponse3 = choix_question[0].reponses[2];
+	}
 	}
 
 
 	marqueurs = {};
-	marqueurs.question = question;
+	marqueurs.question = choix_question;
 	marqueurs.reponse1 = reponse1;
-	marqueurs.reponse2 = reponse2;
+	marqueurs.reponse = reponse;
 	marqueurs.reponse3 = reponse3;
 	marqueurs.opposant = query.opposant;
 	marqueurs.pseudo = query.pseudo;
