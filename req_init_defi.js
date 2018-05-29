@@ -103,9 +103,11 @@ var trait = function (req, res, query) {
 	choix_question = question[i].question;
 	console.log("la question choisie est : " + choix_question);
 
+	reponse = "";
 	for ( j =0; j < question[i].reponses.length; j++) {
 	reponse1 = question[i].reponses[j];
 	console.log("reponse "+ j +" est " + reponse1 );
+	//reponse = "";
 	reponse = reponse + "<a href=req_confirmation?pseudo=" + query.pseudo + "&opposant=" +query.opposant +"&reponse="+reponse1+"><button>"+reponse1+"</button></a>";
 	console.log("reponse lien ! " + reponse);
 
@@ -121,10 +123,10 @@ var trait = function (req, res, query) {
 	marqueurs = {};
 	marqueurs.question = choix_question;
 	marqueurs.reponse1 = reponse1;
-	marqueurs.reponse = reponse;
+	marqueurs.reponse  = reponse;
 	marqueurs.reponse3 = reponse3;
 	marqueurs.opposant = query.opposant;
-	marqueurs.pseudo = query.pseudo;
+	marqueurs.pseudo   = query.pseudo;
 	page = page.supplant(marqueurs);
 
 	res.writeHead(200, {'Content-Type': 'text/html'});

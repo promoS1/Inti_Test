@@ -15,7 +15,13 @@ var trait = function (req, res, query) {
 	var tout;
 	var listeMembres;
 	var contenu_fichier;
-	
+	var pseudo;
+	var opposant;
+	var reponse;
+
+	pseudo	=query.pseudo;
+	opposant=query.opposant;
+	reponse	=query.reponse;
 
 	contenu_fichier = fs.readFileSync("membres.json", 'utf-8');
     listeMembres = JSON.parse(contenu_fichier);
@@ -27,9 +33,14 @@ var trait = function (req, res, query) {
             tout =j + " joueur " + listeMembres[j].pseudo +"\n";
             pseudos = pseudos + tout +"<a href=req_cont_defi?pseudo="+query.pseudo+">defier</a> " + "<br>";
 	}
-
-    marqueurs = {}; 
+	console.log(pseudo);
+	console.log(opposant);
+	console.log(reponse);
+    
+	marqueurs = {}; 
     marqueurs.pseudo = query.pseudo;
+    marqueurs.opposant = query.opposant;
+    marqueurs.reponse = query.reponse;
 	marqueurs.pseudos = pseudos;
     page = page.supplant(marqueurs);
 
