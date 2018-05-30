@@ -15,6 +15,7 @@ var trait = function (req, res, query) {
 	var profil_user;
 	var afficher;
 	var contenu;
+	var profil_joueur;
 	var profil_opposant;
 	var contenu_opposant;
 	var contenu_question;
@@ -70,7 +71,7 @@ var trait = function (req, res, query) {
 	} else {
 		//SINON, ON CRÉE LE NOUVELLE OPPOSANT DANS NOTRE JSON 
 		console.log("utilisateur non trouve");
-		nv_opposant = {"contact":query.opposant ,"score":0,"questions":[0],"ra":"","reponse":""};
+		nv_opposant = {"contact":query.opposant ,"score":0,"questions":[],"ra":"","reponse":""};
 		console.log("nv_opposant : ");
 		console.log(nv_opposant);
 		contenu.push(nv_opposant);
@@ -80,7 +81,7 @@ var trait = function (req, res, query) {
 		fs.writeFileSync(query.pseudo + ".json", profil_user, "utf-8");
 		console.log(profil_user);
 
-		nv_pseudo = {"contact":query.pseudo ,"score":0,"questions":[0],"ra":"","reponse":""};
+		nv_pseudo = {"contact":query.pseudo ,"score":0,"questions":[],"ra":"","reponse":""};
 		contenu_opposant.push(nv_pseudo);
 		profil_opposant = JSON.stringify(contenu_opposant);
 		fs.writeFileSync(query.opposant + ".json", profil_opposant, "utf-8");
@@ -100,22 +101,22 @@ var trait = function (req, res, query) {
 	i= Math.floor(Math.random()* nbr_question );
 	console.log("choix aleatoire"+i);
 	
+	var numero_question = i
+
 	choix_question = question[i].question;
 	console.log("la question choisie est : " + choix_question);
 
 	reponse = "";
 	for ( j =0; j < question[i].reponses.length; j++) {
-	reponse1 = question[i].reponses[j];
-	console.log("reponse "+ j +" est " + reponse1 );
-	//reponse = "";
-	reponse = reponse + "<a href=req_confirmation?pseudo=" + query.pseudo + "&opposant=" +query.opposant +"&reponse="+reponse1+"><button>"+reponse1+"</button></a>";
+		reponse1 = question[i].reponses[j];
+		
+		contenu_question = JSON.stringify(question);
+		reponse = reponse + "<a href=req_confirmation?pseudo=" + query.pseudo +"&question="+numero_question+ "&opposant=" +query.opposant +"&reponse="+reponse1+"><button>"+reponse1+"</button></a>";
 	console.log("reponse lien ! " + reponse);
 
 
 
 
-	//reponse2 = chomx_question[0].reponses[1];
-	//reponse3 = choix_question[0].reponses[2];
 	}
 	}
 
@@ -124,6 +125,7 @@ var trait = function (req, res, query) {
 	marqueurs.question = choix_question;
 	marqueurs.reponse1 = reponse1;
 	marqueurs.reponse  = reponse;
+	marqueurs.numero_question = i
 	marqueurs.reponse3 = reponse3;
 	marqueurs.opposant = query.opposant;
 	marqueurs.pseudo   = query.pseudo;

@@ -10,39 +10,88 @@ require('remedial');
 var trait = function (req, res, query) {
 	var page;
 	var marqueurs;
-	var j;
+	var i,j,k;
+	var question;
 	var pseudos;
 	var tout;
 	var listeMembres;
+	var profil_joueur;
+	var contact;
+	var contenu_joueur;
+	var numero_question;
+	var profil_opposant;
+	var contenu_opposant;
 	var contenu_fichier;
 	var pseudo;
 	var opposant;
 	var reponse;
 
+	question = Number(query.question);
 	pseudo	=query.pseudo;
 	opposant=query.opposant;
 	reponse	=query.reponse;
+	//LECTURE DES JSON DU JOUEUR ET DE L OPPOSANT
+	profil_joueur = fs.readFileSync(query.pseudo +".json","UTF-8");
+	contenu_joueur  = JSON.parse(profil_joueur);
 
+	profil_opposant = fs.readFileSync(query.opposant+".json","UTF-8");
+	contenu_opposant = JSON.parse(profil_opposant);
+
+	console.log(contenu_opposant);
+
+	console.log(question);
+	console.log("la reponse est"+reponse)
+
+		for(i = 0 ; i < contenu_joueur.length ; i++) {
+			if(contenu_joueur[i].contact === query.opposant){
+				console.log(contenu_joueur[i].questions);
+				contenu_joueur[i].questions.push(question);
+				console.log(reponse);
+			}
+		}
+	for( j = 0 ; j < contenu_opposant.length ; j++) {
+		console.log(contenu_opposant[j].contact);
+		if(contenu_opposant[j].contact === query.pseudo){
+			contenu_opposant[j].questions.push(question);
+		}
+	}
+
+	profil_joueur=JSON.stringify(contenu_joueur);
+	fs.writeFileSync(query.pseudo+".json",profil_joueur,"utf-8");
+
+	profil_opposant = JSON.stringify(contenu_opposant);
+	fs.writeFileSync(query.opposant+".json",profil_opposant,"UTF-8");
+
+
+
+
+
+
+
+
+
+	//================================ AFFICHAGE DE LA PAGE HOME============================
 	contenu_fichier = fs.readFileSync("membres.json", 'utf-8');
-    listeMembres = JSON.parse(contenu_fichier);
+	listeMembres = JSON.parse(contenu_fichier);
 
 	pseudos="";
 	page = fs.readFileSync('page_confirmation.html', 'utf-8');
 	for(j=0;j<listeMembres.length ;j++) {
-            tout = "";
-            tout =j + " joueur " + listeMembres[j].pseudo +"\n";
-            pseudos = pseudos + tout +"<a href=req_cont_defi?pseudo="+query.pseudo+">defier</a> " + "<br>";
+		tout = "";
+		tout =j + " joueur " + listeMembres[j].pseudo +"\n";
+		pseudos = pseudos + tout +"<a href=req_cont_defi?pseudo="+query.pseudo+">defier</a> " + "<br>";
 	}
 	console.log(pseudo);
 	console.log(opposant);
 	console.log(reponse);
-    
+
 	marqueurs = {}; 
-    marqueurs.pseudo = query.pseudo;
-    marqueurs.opposant = query.opposant;
-    marqueurs.reponse = query.reponse;
+	marqueurs.pseudo = query.pseudo;
+	marqueurs.question = question
+	marqueurs.opposant = query.opposant;
+	marqueurs.reponse = query.reponse;
 	marqueurs.pseudos = pseudos;
-    page = page.supplant(marqueurs);
+	page = page.supplant(marqueurs);
 
 	res.writeHead(200, {'Content-Type': 'text/html'});
 	res.write(page);
