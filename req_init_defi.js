@@ -46,14 +46,6 @@ var trait = function (req, res, query) {
 	//VERIFIER SI L'ON AS DEJA JOUER AVEC LA PERSONNE DEFIE SI OUI ON AFFICHE LA QUESTION SINON ON COMMENCE UNE NOUVELLE PARTIE
 
 
-	/*
-	   ma_liste_de_questions = [ ma_question_reponse[0], ma_question_reponse[1], ... ];
-	   ma_question_reponse = { 
-	   "question": "ma_question",
-	   "reponses": ["r1", "r2", "r3"]
-	   };
-	 */
-
 	trouver = false;
 	console.log("query.opposant : " + query.opposant);
 	console.log("contenu.length = " + contenu.length);
@@ -69,9 +61,9 @@ var trait = function (req, res, query) {
 		console.log("utilisateur trouve");
 		afficher = true;
 	} else {
-		//SINON, ON CRÉE LE NOUVELLE OPPOSANT DANS NOTRE JSON 
+		//SINON, ON CRÉE LE NOUVELLE OPPOSANT DANS NOTRE JSON n
 		console.log("utilisateur non trouve");
-		nv_opposant = {"contact":query.opposant ,"score":0,"questions":[],"ra":"","reponse":""};
+		nv_opposant = {"contact":query.opposant ,"score":0,"questions":[],"ra":"","reponse":"X"};
 		console.log("nv_opposant : ");
 		console.log(nv_opposant);
 		contenu.push(nv_opposant);
@@ -106,12 +98,13 @@ var trait = function (req, res, query) {
 	choix_question = question[i].question;
 	console.log("la question choisie est : " + choix_question);
 
+
 	reponse = "";
 	for ( j =0; j < question[i].reponses.length; j++) {
 		reponse1 = question[i].reponses[j];
 		
 		contenu_question = JSON.stringify(question);
-		reponse = reponse + "<a href=req_confirmation?pseudo=" + query.pseudo +"&question="+numero_question+ "&opposant=" +query.opposant +"&reponse="+reponse1+"><button>"+reponse1+"</button></a>";
+		reponse = reponse + "<a href=req_confirmation?pseudo=" + query.pseudo +"&question="+numero_question+ "&opposant=" +query.opposant +"&reponse="+j+"><button>"+reponse1+"</button></a>";
 	console.log("reponse lien ! " + reponse);
 
 

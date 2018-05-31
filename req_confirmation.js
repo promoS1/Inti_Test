@@ -24,13 +24,15 @@ var trait = function (req, res, query) {
 	var contenu_fichier;
 	var pseudo;
 	var opposant;
-	var reponse;
+	var reponse_attendu;
 
 	question = Number(query.question);
-	pseudo	=query.pseudo;
-	opposant=query.opposant;
-	reponse	=query.reponse;
+	pseudo = query.pseudo;
+	opposant = query.opposant;
+	reponse_attendu	= Number(query.reponse);
+
 	//LECTURE DES JSON DU JOUEUR ET DE L OPPOSANT
+
 	profil_joueur = fs.readFileSync(query.pseudo +".json","UTF-8");
 	contenu_joueur  = JSON.parse(profil_joueur);
 
@@ -40,17 +42,19 @@ var trait = function (req, res, query) {
 	console.log(contenu_opposant);
 
 	console.log(question);
-	console.log("la reponse est"+reponse)
+	console.log("la reponse est"+reponse_attendu)
 
-		for(i = 0 ; i < contenu_joueur.length ; i++) {
-			if(contenu_joueur[i].contact === query.opposant){
-				console.log(contenu_joueur[i].questions);
-				contenu_joueur[i].questions.push(question);
-				console.log(reponse);
-			}
+	for(i = 0 ; i < contenu_joueur.length ; i++) {
+		if(contenu_joueur[i].contact === query.opposant){
+			console.log(contenu_joueur[i].questions);
+			contenu_joueur[i].questions.push(question);
+			contenu_joueur[i].ra = reponse_attendu;
+			console.log(reponse_attendu);
 		}
+	}
+
 	for( j = 0 ; j < contenu_opposant.length ; j++) {
-		console.log(contenu_opposant[j].contact);
+		console.log("test");
 		if(contenu_opposant[j].contact === query.pseudo){
 			contenu_opposant[j].questions.push(question);
 		}
@@ -83,7 +87,6 @@ var trait = function (req, res, query) {
 	}
 	console.log(pseudo);
 	console.log(opposant);
-	console.log(reponse);
 
 	marqueurs = {}; 
 	marqueurs.pseudo = query.pseudo;
