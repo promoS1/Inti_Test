@@ -84,7 +84,9 @@ var trait = function (req, res, query) {
 			if (query.pseudo !== listeMembres[j].pseudo){
 				pseudos = pseudos + tout + "<a href=req_init_defi?pseudo="+query.pseudo+"&opposant="+listeMembres[j].pseudo+">defier</a> " + "<br>";
 				
-			} opposant = listeMembres[j].pseudo ;
+				var lien = "<a href=req_cont_defi?pseudo="+query.pseudo+"&opposant="+ listeMembres[j].pseudo +">defier</a> "+"<br>" ;
+
+			}opposant = listeMembres[j].pseudo ;
 		}
 		//AFFICHAGE DES MEMBRES EN ATTENTE 
 		var nom = "";
@@ -98,15 +100,14 @@ var trait = function (req, res, query) {
 			score		=	contenu[h].score;
 			donne 		=	(h+1) + " Joueur " + attente +"votre score est de " + score +" Reponse Attendu " + attente_r + " Question " + attente_q + "\n" ; 
 			contacts	= contacts +" "+ donne +"<br> " ;
-			if(attente_r !== "") {
+			if(attente_r === "") {
 				nom  = nom + " " + attente+"<br>" ;
 				affichage_attente = nom ;
-			} else if(attente_r === ""){
-				autre_nom = autre_nom + " " + attente +"<a href=req_cont_defi?pseudo="+query.pseudo+"&opposant="+  attente+">defier</a> "+"<br>" ;
+			} else if(attente_r !== ""){
+			autre_nom = autre_nom + " " + attente;
+				var	affichage_que = autre_nom +" "+ "<a href=req_cont_defi?pseudo="+query.pseudo+"&opposant="+  attente+">defier</a> "+"<br>" ;
 	
-				;
-				var	affichage_que = autre_nom;// + "<a href=req_cont_defi?pseudo="+query.pseudo+"&opposant="+  attente+">defier</a> "+"<br>" ;
-	
+				console.log(lien);
 			}
 
 		}

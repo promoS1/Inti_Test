@@ -63,7 +63,7 @@ var trait = function (req, res, query) {
 	} else {
 		//SINON, ON CRÉE LE NOUVELLE OPPOSANT DANS NOTRE JSON n
 		console.log("utilisateur non trouve");
-		nv_opposant = {"contact":query.opposant ,"score":0,"questions":[],"ra":"","reponse":"X"};
+		nv_opposant = {"contact":query.opposant ,"score":0,"questions":[],"ra":"","reponse":""};
 		console.log("nv_opposant : ");
 		console.log(nv_opposant);
 		contenu.push(nv_opposant);
@@ -73,7 +73,7 @@ var trait = function (req, res, query) {
 		fs.writeFileSync(query.pseudo + ".json", profil_user, "utf-8");
 		console.log(profil_user);
 
-		nv_pseudo = {"contact":query.pseudo ,"score":0,"questions":[],"ra":"","reponse":""};
+		nv_pseudo = {"contact":query.pseudo ,"score":0,"questions":[],"ra":"","reponse":"X"};
 		contenu_opposant.push(nv_pseudo);
 		profil_opposant = JSON.stringify(contenu_opposant);
 		fs.writeFileSync(query.opposant + ".json", profil_opposant, "utf-8");
