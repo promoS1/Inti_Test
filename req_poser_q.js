@@ -10,9 +10,9 @@ var trait = function (req, res, query) {
 	var marqueurs;
 
 	page = fs.readFileSync('page_poser_q.html', 'utf-8');
-
 	marqueurs = {};
 	marqueurs.pseudo = query.pseudo;
+	marqueurs.opposant = query.opposant;
 	page = page.supplant(marqueurs);
 
 	res.writeHead(200, {'Content-Type': 'text/html'});

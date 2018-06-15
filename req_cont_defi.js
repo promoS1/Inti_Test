@@ -49,10 +49,15 @@ var trait = function (req, res, query) {
 
 	for(h = 0;h<contenu.length;h++) {
 		if(query.opposant===contenu[h].contact) {
-			if(contenu[h].reponse==="X") {
+			if(contenu[h].reponse!=="X") {
 				page=fs.readFileSync("page_reponse_q.html","utf-8");
+				
+				console.log(contenu[h].question);
 				nbr_question = question.length;
-				i= Math.floor(Math.random()* nbr_question );
+				i=contenu[h].question;
+				console.log("eisjdnjsn");
+				console.log(i);
+			//	i= Math.floor(Math.random()* nbr_question );
 				var numero_question = i
 					choix_question = question[i].question;
 
@@ -70,17 +75,24 @@ var trait = function (req, res, query) {
 					console.log("test1");
 					}while(i === contenu[h].questions)
 				 */
-			} else if(contenu[h].reponse!=="X") {
+			} else if(contenu[h].reponse==="X") {
 				page=fs.readFileSync("page_repond_q.html","utf-8");
-				nbr_question = question.length;
-				i= Math.floor(Math.random()* nbr_question );
-				var numero_question = i
-					choix_question = question[i].question;
+				
 
+				i = contenu[h].questions[contenu[h].questions.length - 1];
+				var numero_question = i
+				choix_question = question[i].question;
 				reponse = ""
+				//NE PAS REPeTER
+
+				/*do { 
+				i = Math.random(Math.floor() * question[h].question
+				} while( i === contenu[h].questions)l
+				*/
 					for (j=0;j<question[i].reponses.length;j++) {
 						reponse1 = question[i].reponses[j];
 						contenu_questions= JSON.stringify(question);
+
 						reponse = reponse + "<a href=req_poser_q?pseudo=" + query.pseudo +"&question="+numero_question+ "&opposant=" +query.opposant +"&reponse="+j+"><button>"+reponse1+"</button></a>";
 					}
 

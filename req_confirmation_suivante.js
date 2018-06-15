@@ -10,39 +10,26 @@ require('remedial');
 var trait = function (req, res, query) {
 	var page;
 	var marqueurs;
-	var i,j,k,h;
-	var contenu;
+	var i,j,k;
 	var question;
 	var pseudos;
 	var tout;
 	var listeMembres;
-	var lien;
-	var nom;
-	var affichage_attente;
 	var profil_joueur;
 	var contact;
 	var contenu_joueur;
 	var numero_question;
 	var profil_opposant;
-	var attente_r;
-	var attente_q;
-	var trouve;
-	var donne;
-	var attente;
 	var contenu_opposant;
 	var contenu_fichier;
 	var pseudo;
 	var opposant;
-	var ma_reponse;
-	var score;
-	var contacts;
-	var autre_nom;
 	var reponse_attendu;
 
-	question = Number(query.question);
+//	question = Number(query.question);
 	pseudo = query.pseudo;
 	opposant = query.opposant;
-	reponse_attendu	= Number(query.reponse);
+//	reponse_attendu	= Number(query.reponse);
 
 	//LECTURE DES JSON DU JOUEUR ET DE L OPPOSANT
 
@@ -57,14 +44,14 @@ var trait = function (req, res, query) {
 	console.log(question);
 	console.log("la reponse est"+reponse_attendu)
 
-		for(i = 0 ; i < contenu_joueur.length ; i++) {
-			if(contenu_joueur[i].contact === query.opposant){
-				console.log(contenu_joueur[i].questions);
-				contenu_joueur[i].questions.push(question);
-				contenu_joueur[i].ra = reponse_attendu;
-				console.log(reponse_attendu);
-			}
+	for(i = 0 ; i < contenu_joueur.length ; i++) {
+		if(contenu_joueur[i].contact === query.opposant){
+			console.log(contenu_joueur[i].questions);
+			contenu_joueur[i].questions.push(question);
+			contenu_joueur[i].ra = reponse_attendu;
+			console.log(reponse_attendu);
 		}
+	}
 
 	for( j = 0 ; j < contenu_opposant.length ; j++) {
 		console.log("test");
@@ -91,8 +78,6 @@ var trait = function (req, res, query) {
 	contenu_fichier = fs.readFileSync("membres.json", 'utf-8');
 	listeMembres = JSON.parse(contenu_fichier);
 
-	profil_joueur=JSON.stringify=fs.readFileSync(query.pseudo + ".json","utf-8");
-	contenu = JSON.parse(profil_joueur);
 	pseudos="";
 	page = fs.readFileSync('page_confirmation.html', 'utf-8');
 	for(j=0;j<listeMembres.length ;j++) {
@@ -100,30 +85,13 @@ var trait = function (req, res, query) {
 		tout =j + " joueur " + listeMembres[j].pseudo +"\n";
 		pseudos = pseudos + tout +"<a href=req_cont_defi?pseudo="+query.pseudo+">defier</a> " + "<br>";
 	}
-	for(h = 0 ; h < contenu.length ; h++) {
-		attente     =   contenu[h].contact  +"\n";
-		attente_r   =   contenu[h].reponse;
-		ma_reponse  =   contenu[h].ra;
-		attente_q   =   contenu[h].questions;
-		score       =   contenu[h].score;
-		donne       =   (h+1) + " Joueur " + attente +"votre score est de " + score +" Reponse Attendu " + attente_r + " Question " + attente_q + "\n" ;
-		contacts    = contacts +" "+ donne +"<br> " ;
-		if(attente_r !== "") {
-			nom  = nom + " " + attente+"<br>" ;
-			affichage_attente = nom ;
-		} else if(attente_r === ""){
-			autre_nom = autre_nom + " " + attente;
-			var affichage_que = autre_nom +" "+ "<a href=req_cont_defi?pseudo="+query.pseudo+"&opposant="+  attente+">defier</a> "+"<br>" ;
-
-			console.log(lien);
-		}
-
-	}
+	console.log(pseudo);
+	console.log(opposant);
 
 	marqueurs = {}; 
 	marqueurs.pseudo = query.pseudo;
 	marqueurs.question = question
-		marqueurs.opposant = query.opposant;
+	marqueurs.opposant = query.opposant;
 	marqueurs.reponse = query.reponse;
 	marqueurs.pseudos = pseudos;
 	page = page.supplant(marqueurs);
