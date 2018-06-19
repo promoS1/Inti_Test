@@ -27,93 +27,76 @@ var trait = function (req, res, query) {
 	var trouver;
 	var nv_opposant;
 	var nv_pseudo;
+	var affichage_score = "";
 
 	page = fs.readFileSync('page_reponse_q.html', 'utf-8');
-	console.log(query.pseudo);
-	console.log(query.opposant);
 	//ON OUVRE LES DEUX JSON 	
-
 	profil_user = fs.readFileSync(query.pseudo+".json", "UTF-8");
 	contenu = JSON.parse(profil_user);
-
-	console.log("Contenu :")	
-		console.log(contenu);
-
+	console.log("Contenu :");	
+	console.log(contenu);
 	profil_opposant = fs.readFileSync(query.opposant+".json", "UTF-8");
 	contenu_opposant = JSON.parse(profil_opposant);
-
 	contenu_questions = fs.readFileSync("questions.json","UTF-8");
 	question = JSON.parse(contenu_questions);
 
 	//VERIFIER SI JOUER AVEC LA PERSONNE 
+	console.log(query.opposant);
+	console.log(query.pseudo);
 
-	for(h = 0;h<contenu.length;h++) {
-		if(query.opposant===contenu[h].contact) {
-			if(contenu[h].reponse!=="X") {
-				page=fs.readFileSync("page_reponse_q.html","utf-8");
-				
-				console.log(contenu[h].question);
-				nbr_question = question.length;
-				i=contenu[h].question;
-				console.log("eisjdnjsn");
-				console.log(i);
-			//	i= Math.floor(Math.random()* nbr_question );
-				var numero_question = i
-					choix_question = question[i].question;
-
-				reponse = ""
-					for (j=0;j<question[i].reponses.length;j++) {
-						reponse1 = question[i].reponses[j];
-						contenu_questions= JSON.stringify(question);
-						reponse = reponse + "<a href=req_confirmation?pseudo=" + query.pseudo +"&question="+numero_question+ "&opposant=" +query.opposant +"&reponse="+j+"><button>"+reponse1+"</button></a>";
-					}
-
-
-				/*	do {
-					i = Math.floor(Math.random() * question.length);
-					numero_question = contenu[i].questions
-					console.log("test1");
-					}while(i === contenu[h].questions)
-				 */
-			} else if(contenu[h].reponse==="X") {
+	for(h = 0 ; h < contenu.length ; h++) {
+		console.log("la" );
+		console.log("opposant: "+contenu[h].contact);
+		if(query.opposant === contenu[h].contact) {
+			console.log("opposant trouve !!!: "+contenu[h].contact);
+			// on a deja joué avec l'opposant
+			// ici on affiche le score, la precedente question, ...
+			if(contenu_opposant[h].reponse !== "X") {
+				var	attente     =   contenu[h].contact  +"\n";
+				var	attente_r   =   contenu[h].reponse;
+				var	ma_reponse  =   contenu[h].ra;
+				var	attente_q   =   contenu[h].questions;
+				var	score       =   contenu[h].score;
+				var	donne =(h+1) + " Joueur " + attente +"votre score est de " + score +" Reponse Attendu " + attente_r + " Question " + attente_q + "\n" ;
+				console.log(donne);
+				// si c'est la premiere fois qu'on joue avec, on va directement lui poser la question
+			} else if(contenu_opposant[h].reponse === "X"/* || Number.isInteger(contenu[h].ra) === true*/ ) {
 				page=fs.readFileSync("page_repond_q.html","utf-8");
-				
-
-				i = contenu[h].questions[contenu[h].questions.length - 1];
-				var numero_question = i
+				nbr_question = contenu_opposant[h].questions.length;
+				console.log(nbr_question);
+				i= contenu_opposant[h].questions[contenu_opposant[h].questions.length-1];
+				console.log(i);
+				console.log(contenu_opposant[h].questions);
+				var numero_question = i;
 				choix_question = question[i].question;
-				reponse = ""
-				//NE PAS REPeTER
+				console.log("Num de question : "+choix_question);
+				reponse = "";
+
+				for (j=0;j<question[i].reponses.length;j++) {
+					reponse1 = question[i].reponses[j];
+					contenu_questions= JSON.stringify(question);
+					reponse = reponse + "<a href=req_confirmation_suivante?pseudo=" + query.pseudo +"&question="+numero_question+ "&opposant=" +query.opposant +"&reponse="+j+"><button>"+reponse1+"</button></a>";
+				}
 
 				/*do { 
-				i = Math.random(Math.floor() * question[h].question
-				} while( i === contenu[h].questions)l
-				*/
-					for (j=0;j<question[i].reponses.length;j++) {
-						reponse1 = question[i].reponses[j];
-						contenu_questions= JSON.stringify(question);
-
-						reponse = reponse + "<a href=req_poser_q?pseudo=" + query.pseudo +"&question="+numero_question+ "&opposant=" +query.opposant +"&reponse="+j+"><button>"+reponse1+"</button></a>";
-					}
-
-				/*	do {
-					i = Math.floor(Math.random() * question.length) ;
-					console.log(i);
-					console.log(question.length);
-					numero_question = contenu[i].questions
-					console.log(numero_question);
-					}while(i === contenu[h].questions || i > question.length)
+				  i = Math.random(Math.floor() * question[h].question
+				  } while( i === contenu[h].questions)l
 				 */
+
 			}
 		}
+		//break;
 	}
 
 
 
+
 	marqueurs = {};
+
+	marqueurs.affichage_score= affichage_score;
 	marqueurs.question = choix_question;
-	marqueurs.reponse = reponse
-		marqueurs.opposant = query.opposant;
+	marqueurs.reponse = reponse;
+	marqueurs.opposant = query.opposant;
 	marqueurs.pseudo = query.pseudo;
 	page = page.supplant(marqueurs);
 
@@ -121,6 +104,5 @@ var trait = function (req, res, query) {
 	res.write(page);
 	res.end();
 };
-
 //=======
 module.exports = trait;

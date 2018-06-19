@@ -58,59 +58,47 @@ var trait = function (req, res, query) {
 	}
 	// SI UTILISATEUR TROUVER, ON AFFICHE LA QUESTION 
 	if (trouver === true) {
-		console.log("utilisateur trouve");
+			console.log("utilisateur trouve");
 		afficher = true;
 	} else {
 		//SINON, ON CRÉE LE NOUVELLE OPPOSANT DANS NOTRE JSON n
-		console.log("utilisateur non trouve");
-		nv_opposant = {"contact":query.opposant ,"score":0,"questions":[],"ra":"","reponse":""};
-		console.log("nv_opposant : ");
-		console.log(nv_opposant);
+			console.log("utilisateur non trouve");
+		nv_opposant = {"contact":query.opposant ,"score":0,"questions":[],"ra":"","reponse":"X"};
+			console.log("nv_opposant : ");
+			console.log(nv_opposant);
 		contenu.push(nv_opposant);
-		console.log("mise a jour du contenu : ");
-		console.log( contenu);
+			console.log("mise a jour du contenu : ");
+			console.log( contenu);
 		profil_user = JSON.stringify(contenu);
 		fs.writeFileSync(query.pseudo + ".json", profil_user, "utf-8");
-		console.log(profil_user);
-
-		nv_pseudo = {"contact":query.pseudo ,"score":0,"questions":[],"ra":"","reponse":"X"};
+			console.log(profil_user);
+		nv_pseudo = {"contact":query.pseudo ,"score":0,"questions":[],"ra":"","reponse":""};
 		contenu_opposant.push(nv_pseudo);
 		profil_opposant = JSON.stringify(contenu_opposant);
 		fs.writeFileSync(query.opposant + ".json", profil_opposant, "utf-8");
-		console.log("test du console ");
-		console.log( contenu_opposant);
+			console.log("test du console ");
+			console.log( contenu_opposant);
 		afficher = true;
 	}
 	if (afficher === true) {
-
-	contenu_question = fs.readFileSync("questions.json","utf-8");
-	question = JSON.parse(contenu_question)
-	console.log(question);
-
-	nbr_question = question.length;
-	console.log("il ya "+ nbr_question+" questions ");
-	
-	i= Math.floor(Math.random()* nbr_question );
-	console.log("choix aleatoire"+i);
-	
-	var numero_question = i
-
-	choix_question = question[i].question;
-	console.log("la question choisie est : " + choix_question);
-
-
-	reponse = "";
-	for ( j =0; j < question[i].reponses.length; j++) {
-		reponse1 = question[i].reponses[j];
-		
-		contenu_question = JSON.stringify(question);
-		reponse = reponse + "<a href=req_confirmation?pseudo=" + query.pseudo +"&question="+numero_question+ "&opposant=" +query.opposant +"&reponse="+j+"><button>"+reponse1+"</button></a>";
-	console.log("reponse lien ! " + reponse);
-
-
-
-
-	}
+		//POUR L'AFFICHAGE DES QUESTION !!
+		contenu_question = fs.readFileSync("questions.json","utf-8");
+		question = JSON.parse(contenu_question);
+			console.log(question);
+		nbr_question = question.length;
+			console.log("il ya "+ nbr_question+" questions ");
+		i= Math.floor(Math.random()* nbr_question );
+			console.log("choix aleatoire"+i);
+		var numero_question = i;
+		choix_question = question[i].question;
+			console.log("la question choisie est : " + choix_question);
+		reponse = "";
+		for ( j =0; j < question[i].reponses.length; j++) {
+			reponse1 = question[i].reponses[j];
+			contenu_question = JSON.stringify(question);
+			reponse = reponse + "<a href=req_confirmation?pseudo=" + query.pseudo +"&question="+numero_question+ "&opposant=" +query.opposant +"&reponse="+j+"><button>"+reponse1+"</button></a>";
+				console.log("reponse lien ! " + reponse);
+		}
 	}
 
 
@@ -118,7 +106,7 @@ var trait = function (req, res, query) {
 	marqueurs.question = choix_question;
 	marqueurs.reponse1 = reponse1;
 	marqueurs.reponse  = reponse;
-	marqueurs.numero_question = i
+	marqueurs.numero_question = i;
 	marqueurs.reponse3 = reponse3;
 	marqueurs.opposant = query.opposant;
 	marqueurs.pseudo   = query.pseudo;

@@ -36,56 +36,57 @@ var trait = function(req, res, query) {
 
 	contenu_fichier = fs.readFileSync("membres.json" , "utf-8");
 	listeMembres = JSON.parse(contenu_fichier);
+	pseudos = "";
+	contacts= "";
+	opposant="";
+	page = fs.readFileSync('page_home.html','UTF-8');
+	profil_user = fs.readFileSync(query.pseudo+".json","UTF-8");
+	contenu = JSON.parse(profil_user);
 
-		pseudos = "";
-		contacts= "";
-		opposant="";
+	// AFFICHAGE DES MEMBES A DEFIER
+	for(j = 0 ; j <listeMembres.length ; j++ ) {
+		tout = "";
+		tout =(j+1) + " joueur " + listeMembres[j].pseudo +"\n";
+		if (query.pseudo !== listeMembres[j].pseudo){
+			pseudos = pseudos + tout + "<a href=req_init_defi?pseudo="+query.pseudo+"&opposant="+listeMembres[j].pseudo+">defier</a> " + "<br>";
+			var lien = "<a href=req_cont_defi?pseudo="+query.pseudo+"&opposant="+ listeMembres[j].pseudo +">defier</a> "+"<br>" ;
+		}opposant = listeMembres[j].pseudo ;
+	}
+	//AFFICHAGE DES MEMBRES EN ATTENTE
+	var nom = "";
+	var autre_nom = "";
+	var en_attente = "";
+	var affichage_que = "" ;
 
-		page = fs.readFileSync('page_home.html','UTF-8');
-
-		profil_user = fs.readFileSync(query.pseudo+".json","UTF-8");
-		contenu = JSON.parse(profil_user);
-
-
-		// AFFICHAGE DES MEMBES A DEFIER
-
-		for(j = 0 ; j <listeMembres.length ; j++ ) {
-			tout = "";
-			tout =(j+1) + " joueur " + listeMembres[j].pseudo +"\n";
-			if (query.pseudo !== listeMembres[j].pseudo){
-				pseudos = pseudos + tout + "<a href=req_init_defi?pseudo="+query.pseudo+"&opposant="+listeMembres[j].pseudo+">defier</a> " + "<br>";
-
-				var lien = "<a href=req_cont_defi?pseudo="+query.pseudo+"&opposant="+ listeMembres[j].pseudo +">defier</a> "+"<br>" ;
-
-			}opposant = listeMembres[j].pseudo ;
+	for(h = 0 ; h < contenu.length ; h++) {
+		attente     =   contenu[h].contact  +"\n";
+		attente_r   =   contenu[h].reponse;
+		ma_reponse  =   contenu[h].ra;
+		attente_q   =   contenu[h].questions;
+		score       =   contenu[h].score;
+		donne =(h+1) + " Joueur " + attente +"votre score est de " + score +" Reponse Attendu " + attente_r + " Question " + attente_q + "\n" ;
+		console.log(donne);
+		contacts    = contacts +" "+ donne +"<br> " ;
+		// on l'affiche en haut a droite car on attend sa reponse
+		if(attente_r === "X"/* || Number.isInteger(contenu[h].ra) === true */ ) {
+			// Number.isInteger(ma_reponse) === true 
+			nom  = nom + "X" + donne+"<br>" ;
+			en_attente = nom + " " ;
+			// on l'affiche en bas a droite
+			// l'opposant a repondu ou on n'a jamais joue avec lui
+		} else if(ma_reponse !== "X" ){
+			autre_nom = autre_nom + " " + attente + "<a href=req_cont_defi?pseudo="+query.pseudo+"&opposant="+  attente+">defier</a> "+"<br>" ;
+			affichage_que = autre_nom +" ";
+			console.log(affichage_que);
 		}
-		//AFFICHAGE DES MEMBRES EN ATTENTE
-		var nom = "";
-		var autre_nom = "";
 
-		for(h = 0 ; h < contenu.length ; h++) {
-			attente     =   contenu[h].contact  +"\n";
-			attente_r   =   contenu[h].reponse;
-			ma_reponse  =   contenu[h].ra;
-			attente_q   =   contenu[h].questions;
-			score       =   contenu[h].score;
-			donne       =   (h+1) + " Joueur " + attente +"votre score est de " + score +" Reponse Attendu " + attente_r + " Question " + attente_q + "\n" ;
-			contacts    = contacts +" "+ donne +"<br> " ;
-			if(attente_r !== "") {
-				nom  = nom + " " + attente+"<br>" ;
-				affichage_attente = nom ;
-			} else if(attente_r === ""){
-				autre_nom = autre_nom + " " + attente + "<a href=req_cont_defi?pseudo="+query.pseudo+"&opposant="+  attente+">defier</a> "+"<br>" ;
-			var affichage_que = autre_nom +" ";
+	}
 
-				console.log(lien);
-			}
 
-		}
 
 
 	marqueurs = {};
-	marqueurs.affichage_attente = affichage_attente;
+	marqueurs.en_attente = en_attente;
 	marqueurs.affichage_que = affichage_que;
 	marqueurs.pseudo = query.pseudo;
 	marqueurs.pseudos = pseudos;

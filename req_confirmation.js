@@ -1,6 +1,6 @@
-//==================
-// req confirmation
-//=================
+  //==================//
+ // req confirmation //
+//==================//
 
 "use strict";
 
@@ -48,12 +48,9 @@ var trait = function (req, res, query) {
 
 	profil_joueur = fs.readFileSync(query.pseudo +".json","UTF-8");
 	contenu_joueur  = JSON.parse(profil_joueur);
-
 	profil_opposant = fs.readFileSync(query.opposant+".json","UTF-8");
 	contenu_opposant = JSON.parse(profil_opposant);
-
 	console.log(contenu_opposant);
-
 	console.log(question);
 	console.log("la reponse est"+reponse_attendu)
 
@@ -65,14 +62,12 @@ var trait = function (req, res, query) {
 				console.log(reponse_attendu);
 			}
 		}
-
 	for( j = 0 ; j < contenu_opposant.length ; j++) {
 		console.log("test");
 		if(contenu_opposant[j].contact === query.pseudo){
-			contenu_opposant[j].questions.push(question);
+			contenu_opposant[j].reponse = reponse_attendu;
 		}
 	}
-
 	profil_joueur=JSON.stringify(contenu_joueur);
 	fs.writeFileSync(query.pseudo+".json",profil_joueur,"utf-8");
 
@@ -108,10 +103,10 @@ var trait = function (req, res, query) {
 		score       =   contenu[h].score;
 		donne       =   (h+1) + " Joueur " + attente +"votre score est de " + score +" Reponse Attendu " + attente_r + " Question " + attente_q + "\n" ;
 		contacts    = contacts +" "+ donne +"<br> " ;
-		if(attente_r !== "") {
+		if(attente_r !== "X") {
 			nom  = nom + " " + attente+"<br>" ;
 			affichage_attente = nom ;
-		} else if(attente_r === ""){
+		} else if(attente_r === "X"){
 			autre_nom = autre_nom + " " + attente;
 			var affichage_que = autre_nom +" "+ "<a href=req_cont_defi?pseudo="+query.pseudo+"&opposant="+  attente+">defier</a> "+"<br>" ;
 
@@ -122,8 +117,8 @@ var trait = function (req, res, query) {
 
 	marqueurs = {}; 
 	marqueurs.pseudo = query.pseudo;
-	marqueurs.question = question
-		marqueurs.opposant = query.opposant;
+	marqueurs.question = question;
+	marqueurs.opposant = query.opposant;
 	marqueurs.reponse = query.reponse;
 	marqueurs.pseudos = pseudos;
 	page = page.supplant(marqueurs);

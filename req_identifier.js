@@ -13,7 +13,7 @@ var trait = function (req, res, query) {
 
 	var marqueurs;
 	var pseudo;
-	var affichage_attente;
+	var en_attente;
 	var pseudos;
 	var password;
 	var page;
@@ -34,6 +34,10 @@ var trait = function (req, res, query) {
 	var contacts;
 	var score;
 	var opposant;
+	var nom;
+	var autre_nom;
+	var affichage_que;
+
 	// ON LIT LES COMPTES EXISTANTS
 
 	contenu_fichier = fs.readFileSync("membres.json" , "utf-8");    
@@ -66,32 +70,29 @@ var trait = function (req, res, query) {
 
 	} else {
 		// SI IDENTIFICATION OK, ON ENVOIE PAGE ACCUEIL MEMBRE
-		pseudos = "";
-		contacts= "";
-		opposant="";
-
 		page = fs.readFileSync('page_home.html','UTF-8');
 
 		profil_user = fs.readFileSync(query.pseudo+".json","UTF-8");
 		contenu = JSON.parse(profil_user);
-
-
 		// AFFICHAGE DES MEMBES A DEFIER
+		
+		pseudos = "";
+        contacts= "";
+		opposant="";
+		tout = "";
 
 		for(j = 0 ; j <listeMembres.length ; j++ ) {
-			tout = "";
 			tout =(j+1) + " joueur " + listeMembres[j].pseudo +"\n";
 			if (query.pseudo !== listeMembres[j].pseudo){
 				pseudos = pseudos + tout + "<a href=req_init_defi?pseudo="+query.pseudo+"&opposant="+listeMembres[j].pseudo+">defier</a> " + "<br>";
-				
-				var lien = "<a href=req_cont_defi?pseudo="+query.pseudo+"&opposant="+ listeMembres[j].pseudo +">defier</a> "+"<br>" ;
-
 			}opposant = listeMembres[j].pseudo ;
 		}
 		//AFFICHAGE DES MEMBRES EN ATTENTE 
-		var nom = "";
-		var autre_nom = "";
-
+		
+		nom = "";
+		autre_nom = "";
+		affichage_que = "";
+		en_attente= "";
 		for(h = 0 ; h < contenu.length ; h++) {
 			attente  	=	contenu[h].contact  +"\n";
 			attente_r	=	contenu[h].reponse; 
@@ -100,14 +101,13 @@ var trait = function (req, res, query) {
 			score		=	contenu[h].score;
 			donne 		=	(h+1) + " Joueur " + attente +"votre score est de " + score +" Reponse Attendu " + attente_r + " Question " + attente_q + "\n" ; 
 			contacts	= contacts +" "+ donne +"<br> " ;
-			if(attente_r === "") {
+			if(attente_r === "X") {
 				nom  = nom + " " + attente+"<br>" ;
-				affichage_attente = nom ;
-			} else if(attente_r !== ""){
+				en_attente = nom ;
+			} else if(attente_r !== "X"){
 			autre_nom = autre_nom + " " + attente;
-				var	affichage_que = autre_nom +" "+ "<a href=req_cont_defi?pseudo="+query.pseudo+"&opposant="+  attente+">defier</a> "+"<br>" ;
+				affichage_que = autre_nom +" "+ "<a href=req_cont_defi?pseudo="+query.pseudo+"&opposant="+  attente+">defier</a> "+"<br>" ;
 	
-				console.log(lien);
 			}
 
 		}
@@ -116,7 +116,7 @@ var trait = function (req, res, query) {
 
 
 	marqueurs = {};
-	marqueurs.affichage_attente = affichage_attente;
+	marqueurs.en_attente = en_attente;
 	marqueurs.affichage_que = affichage_que;
 	marqueurs.pseudo = query.pseudo;
 	marqueurs.pseudos = pseudos;

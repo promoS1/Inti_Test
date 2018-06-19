@@ -1,6 +1,6 @@
-//==================
-// req confirmation
-//=================
+  //===========================//
+ // req confirmation_suivante //
+//===========================//
 
 "use strict";
 
@@ -17,7 +17,7 @@ var trait = function (req, res, query) {
 	var listeMembres;
 	var profil_joueur;
 	var contact;
-	var contenu_joueur;
+	var contenu;
 	var numero_question;
 	var profil_opposant;
 	var contenu_opposant;
@@ -26,15 +26,15 @@ var trait = function (req, res, query) {
 	var opposant;
 	var reponse_attendu;
 
-//	question = Number(query.question);
+	question = Number(query.question);
 	pseudo = query.pseudo;
 	opposant = query.opposant;
-//	reponse_attendu	= Number(query.reponse);
+	reponse_attendu	= Number(query.reponse);
 
 	//LECTURE DES JSON DU JOUEUR ET DE L OPPOSANT
 
 	profil_joueur = fs.readFileSync(query.pseudo +".json","UTF-8");
-	contenu_joueur  = JSON.parse(profil_joueur);
+	contenu = JSON.parse(profil_joueur);
 
 	profil_opposant = fs.readFileSync(query.opposant+".json","UTF-8");
 	contenu_opposant = JSON.parse(profil_opposant);
@@ -44,11 +44,11 @@ var trait = function (req, res, query) {
 	console.log(question);
 	console.log("la reponse est"+reponse_attendu)
 
-	for(i = 0 ; i < contenu_joueur.length ; i++) {
-		if(contenu_joueur[i].contact === query.opposant){
-			console.log(contenu_joueur[i].questions);
-			contenu_joueur[i].questions.push(question);
-			contenu_joueur[i].ra = reponse_attendu;
+	for(i = 0 ; i < contenu.length ; i++) {
+		if(contenu[i].contact === query.opposant){
+			console.log(contenu[i].questions);
+			contenu[i].reponse = reponse_attendu;
+			contenu[i].questions.push(question);
 			console.log(reponse_attendu);
 		}
 	}
@@ -56,7 +56,7 @@ var trait = function (req, res, query) {
 	for( j = 0 ; j < contenu_opposant.length ; j++) {
 		console.log("test");
 		if(contenu_opposant[j].contact === query.pseudo){
-			contenu_opposant[j].questions.push(question);
+			contenu_opposant[j].ra = reponse_attendu;
 		}
 	}
 
@@ -65,7 +65,6 @@ var trait = function (req, res, query) {
 
 	profil_opposant = JSON.stringify(contenu_opposant);
 	fs.writeFileSync(query.opposant+".json",profil_opposant,"UTF-8");
-
 
 
 
