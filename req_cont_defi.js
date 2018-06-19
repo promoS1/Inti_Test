@@ -51,16 +51,19 @@ var trait = function (req, res, query) {
 			console.log("opposant trouve !!!: "+contenu[h].contact);
 			// on a deja joué avec l'opposant
 			// ici on affiche le score, la precedente question, ...
-			if(contenu_opposant[h].reponse !== "X") {
-				var	attente     =   contenu[h].contact  +"\n";
+			console.log(contenu[h].reponse);
+			if(contenu[h].reponse !== "X") {
+				var	attente     =   contenu[h].contact;
 				var	attente_r   =   contenu[h].reponse;
 				var	ma_reponse  =   contenu[h].ra;
 				var	attente_q   =   contenu[h].questions;
 				var	score       =   contenu[h].score;
-				var	donne =(h+1) + " Joueur " + attente +"votre score est de " + score +" Reponse Attendu " + attente_r + " Question " + attente_q + "\n" ;
+				var	donne = " Joueur "+ attente +" votre score est de " + score +" Reponse Attendu " + attente_r + " Question " + attente_q + "\n" ;
+				affichage_score = donne;
+
 				console.log(donne);
 				// si c'est la premiere fois qu'on joue avec, on va directement lui poser la question
-			} else if(contenu_opposant[h].reponse === "X"/* || Number.isInteger(contenu[h].ra) === true*/ ) {
+			} else if(contenu_opposant[h].reponse === "X" || Number.isInteger(contenu[h].ra) === true ) {
 				page=fs.readFileSync("page_repond_q.html","utf-8");
 				nbr_question = contenu_opposant[h].questions.length;
 				console.log(nbr_question);

@@ -48,7 +48,7 @@ var trait = function (req, res, query) {
 			console.log("opposant trouve !!!: "+contenu[h].contact);
 			// on a deja joué avec l'opposant
 			// ici on affiche le score, la precedente question, ...
-
+			console.log(contenu[h].reponse);
 			if(contenu[h].reponse !== "X") {
 				console.log("question: "+question);
 				nbr_question = question.length;
@@ -62,7 +62,7 @@ var trait = function (req, res, query) {
 				for ( j =0; j < question[i].reponses.length; j++) {
 					reponse1 = question[i].reponses[j];
 					contenu_questions = JSON.stringify(question);
-					reponse = reponse + "<a href=req_confirmation?pseudo=" + query.pseudo +"&question="+numero_question+ "&opposant=" +query.opposant +"&reponse="+j+"><button>"+reponse1+"</button></a>";
+					reponse = reponse + "<a href=req_confirmation_suivante?pseudo=" + query.pseudo +"&question="+numero_question+ "&opposant=" +query.opposant +"&reponse="+j+"><button>"+reponse1+"</button></a>";
 					console.log("reponse lien ! " + reponse);
 					console.log("etape 1 !!");
 				}		
@@ -80,7 +80,7 @@ var trait = function (req, res, query) {
 				reponse = "";
 				for (j=0;j<question[i].reponses.length;j++) {
 					reponse1 = question[i].reponses[j];
-					reponse = reponse + "<a href=req_confirmation?pseudo=" + query.pseudo +"&question="+numero_question+ "&opposant=" +query.opposant +"&reponse="+j+"><button>"+reponse1+"</button></a>";
+					reponse = reponse + "<a href=req_confirmation_suivante?pseudo=" + query.pseudo +"&question="+numero_question+ "&opposant=" +query.opposant +"&reponse="+j+"><button>"+reponse1+"</button></a>";
 				console.log("etape 2");
 				console.log(reponse);
 				contenu_questions = JSON.stringify(question);

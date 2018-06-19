@@ -47,7 +47,7 @@ var trait = function (req, res, query) {
 	for(i = 0 ; i < contenu.length ; i++) {
 		if(contenu[i].contact === query.opposant){
 			console.log(contenu[i].questions);
-			contenu[i].reponse = reponse_attendu;
+			contenu[i].ra= reponse_attendu;
 			contenu[i].questions.push(question);
 			console.log(reponse_attendu);
 		}
@@ -56,7 +56,7 @@ var trait = function (req, res, query) {
 	for( j = 0 ; j < contenu_opposant.length ; j++) {
 		console.log("test");
 		if(contenu_opposant[j].contact === query.pseudo){
-			contenu_opposant[j].ra = reponse_attendu;
+			contenu_opposant[j].reponse = reponse_attendu;
 		}
 	}
 
