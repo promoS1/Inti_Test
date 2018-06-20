@@ -21,6 +21,7 @@ var trait = function (req, res, query) {
 	var reponse;
 	var contenu_questions;
 	var question;
+	var choix_question;
 	var h,a,i,j;
 	var numero_question;
 	var nbr_question;
@@ -35,8 +36,12 @@ var trait = function (req, res, query) {
 	contenu = JSON.parse(profil_user);
 	console.log("Contenu :");	
 	console.log(contenu);
+	
 	profil_opposant = fs.readFileSync(query.opposant+".json", "UTF-8");
 	contenu_opposant = JSON.parse(profil_opposant);
+	console.log("contenu_opposant");
+	console.log(contenu_opposant);
+	
 	contenu_questions = fs.readFileSync("questions.json","UTF-8");
 	question = JSON.parse(contenu_questions);
 
@@ -51,13 +56,13 @@ var trait = function (req, res, query) {
 			console.log("opposant trouve !!!: "+contenu[h].contact);
 			// on a deja joué avec l'opposant
 			// ici on affiche le score, la precedente question, ...
-			console.log(contenu[h].reponse);
-			if(contenu[h].reponse !== "X") {
-				var	attente     =   contenu[h].contact;
-				var	attente_r   =   contenu[h].reponse;
-				var	ma_reponse  =   contenu[h].ra;
-				var	attente_q   =   contenu[h].questions;
-				var	score       =   contenu[h].score;
+			console.log(contenu_opposant[h].reponse);
+			if(contenu_opposant[h].reponse !== "X") {
+				var	attente     =   contenu_opposant[h].contact;
+				var	attente_r   =   contenu_opposant[h].reponse;
+				var	ma_reponse  =   contenu_opposant[h].ra;
+				var	attente_q   =   contenu_opposant[h].questions;
+				var	score       =   contenu_opposant[h].score;
 				var	donne = " Joueur "+ attente +" votre score est de " + score +" Reponse Attendu " + attente_r + " Question " + attente_q + "\n" ;
 				affichage_score = donne;
 
@@ -78,7 +83,7 @@ var trait = function (req, res, query) {
 				for (j=0;j<question[i].reponses.length;j++) {
 					reponse1 = question[i].reponses[j];
 					contenu_questions= JSON.stringify(question);
-					reponse = reponse + "<a href=req_confirmation_suivante?pseudo=" + query.pseudo +"&question="+numero_question+ "&opposant=" +query.opposant +"&reponse="+j+"><button>"+reponse1+"</button></a>";
+					reponse = reponse + "<a href=req_poser_q?pseudo=" + query.pseudo +"&question="+numero_question+ "&opposant=" +query.opposant +"&reponse="+j+"><button>"+reponse1+"</button></a>";
 				}
 
 				/*do { 
