@@ -22,7 +22,7 @@ var trait = function (req, res, query) {
 	var contenu_questions;
 	var question;
 	var choix_question;
-	var h,a,i,j;
+	var k,h,a,i,j;
 	var numero_question;
 	var nbr_question;
 	var trouver;
@@ -56,8 +56,10 @@ var trait = function (req, res, query) {
 			console.log("opposant trouve !!!: "+contenu[h].contact);
 			// on a deja joué avec l'opposant
 			// ici on affiche le score, la precedente question, ...
-			console.log(contenu_opposant[h].reponse);
+			//console.log(contenu_opposant[h].reponse;
+			for(k=0;k<contenu_opposant ; k++){
 			if(contenu_opposant[h].reponse !== "X") {
+			console.log(contenu_opposant[k].reponse);
 				var	attente     =   contenu_opposant[h].contact;
 				var	attente_r   =   contenu_opposant[h].reponse;
 				var	ma_reponse  =   contenu_opposant[h].ra;
@@ -91,6 +93,7 @@ var trait = function (req, res, query) {
 				  } while( i === contenu[h].questions)l
 				 */
 
+			}
 			}
 		}
 		//break;

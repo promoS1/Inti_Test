@@ -62,7 +62,7 @@ var trait = function (req, res, query) {
 				for ( j =0; j < question[i].reponses.length; j++) {
 					reponse1 = question[i].reponses[j];
 					contenu_questions = JSON.stringify(question);
-					reponse = reponse + "<a href=req_confirmation_suivante?pseudo=" + query.pseudo +"&question="+numero_question+ "&opposant=" +query.opposant +"&reponse="+j+"><button>"+reponse1+"</button></a>";
+					reponse = reponse + "<a href=req_poser_q?pseudo=" + query.pseudo +"&question="+numero_question+ "&opposant=" +query.opposant +"&reponse="+j+"><button>"+reponse1+"</button></a>";
 					console.log("reponse lien ! " + reponse);
 					console.log("etape 1 !!");
 				}		

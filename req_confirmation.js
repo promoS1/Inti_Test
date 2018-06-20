@@ -86,7 +86,7 @@ var trait = function (req, res, query) {
 	contenu_fichier = fs.readFileSync("membres.json", 'utf-8');
 	listeMembres = JSON.parse(contenu_fichier);
 
-	profil_joueur=JSON.stringify=fs.readFileSync(query.pseudo + ".json","utf-8");
+	profil_joueur=fs.readFileSync(query.pseudo + ".json","utf-8");
 	contenu = JSON.parse(profil_joueur);
 	pseudos="";
 	page = fs.readFileSync('page_confirmation.html', 'utf-8');
