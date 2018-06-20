@@ -105,8 +105,8 @@ var trait = function (req, res, query) {
 				nom  = nom + " " + attente+"<br>" ;
 				en_attente = nom ;
 			} else if(attente_r !== "X"){
-			autre_nom = autre_nom + " " + attente;
-				affichage_que = autre_nom +" "+ "<a href=req_cont_defi?pseudo="+query.pseudo+"&opposant="+  attente+">defier</a> "+"<br>" ;
+			autre_nom = autre_nom + " " + attente + "<a href=req_cont_defi?pseudo="+query.pseudo+"&opposant="+  attente+">defier</a> "+"<br>" ;
+				affichage_que = autre_nom +" ";
 	
 			}
 
