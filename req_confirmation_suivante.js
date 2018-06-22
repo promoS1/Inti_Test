@@ -53,13 +53,13 @@ var trait = function (req, res, query) {
 		}
 	}
 
-	for( j = 0 ; j < contenu_opposant.length ; j++) {
+	/*for( j = 0 ; j < contenu_opposant.length ; j++) {
 		console.log("test");
 		if(contenu_opposant[j].contact === query.pseudo){
 			contenu_opposant[j].reponse = reponse_attendu;
 		}
 	}
-
+*/
 	profil_joueur=JSON.stringify(contenu_joueur);
 	fs.writeFileSync(query.pseudo+".json",profil_joueur,"utf-8");
 

@@ -1,4 +1,4 @@
-//====================
+//==================
 // req_repond_q.js
 //===================
 
@@ -45,30 +45,6 @@ var trait = function (req, res, query) {
 	for(h = 0 ; h < contenu.length ; h++) {
 		console.log("opposant: "+contenu[h].contact);
 		if(query.opposant === contenu[h].contact) {
-			console.log("opposant trouve !!!: "+contenu[h].contact);
-			// on a deja joué avec l'opposant
-			// ici on affiche le score, la precedente question, ...
-			console.log(contenu[h].reponse);
-			if(contenu[h].reponse !== "X") {
-				console.log("question: "+question);
-				nbr_question = question.length;
-				console.log("il ya "+ nbr_question+" questions ");
-				i= Math.floor(Math.random()* nbr_question );
-				console.log("choix aleatoire"+i);
-				var numero_question = i;
-				choix_question = question[i].question;
-				console.log("la question choisie est : " + choix_question);
-				reponse = "";
-				for ( j =0; j < question[i].reponses.length; j++) {
-					reponse1 = question[i].reponses[j];
-					contenu_questions = JSON.stringify(question);
-					reponse = reponse + "<a href=req_poser_q?pseudo=" + query.pseudo +"&question="+numero_question+ "&opposant=" +query.opposant +"&reponse="+j+"><button>"+reponse1+"</button></a>";
-					console.log("reponse lien ! " + reponse);
-					console.log("etape 1 !!");
-				}		
-				// si c'est la premiere fois qu'on joue avec, on va directement lui poser la question
-			} else if(contenu[h].reponse === "X" || Number.isInteger(contenu[h].ra) === true ) {
-				page=fs.readFileSync("page_repond_q.html","utf-8");
 				nbr_question = contenu[h].questions.length;
 				console.log(nbr_question);
 				i= contenu[h].questions[contenu[h].questions.length-1];
@@ -80,16 +56,15 @@ var trait = function (req, res, query) {
 				reponse = "";
 				for (j=0;j<question[i].reponses.length;j++) {
 					reponse1 = question[i].reponses[j];
-					reponse = reponse + "<a href=req_confirmation_suivante?pseudo=" + query.pseudo +"&question="+numero_question+ "&opposant=" +query.opposant +"&reponse="+j+"><button>"+reponse1+"</button></a>";
-				console.log("etape 2");
-				console.log(reponse);
-				contenu_questions = JSON.stringify(question);
-				
+					reponse = reponse + "<a href=req_poser_q?pseudo=" + query.pseudo +"&question="+numero_question+ "&opposant=" +query.opposant +"&reponse="+j+"><button>"+reponse1+"</button></a>";
+					console.log("etape 2");
+					console.log(reponse);
+					contenu_questions = JSON.stringify(question);
+
 				}
 			}
 		}
 		//break;
-	}
 
 
 
@@ -109,3 +84,4 @@ var trait = function (req, res, query) {
 };
 //=======
 module.exports = trait;
+

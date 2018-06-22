@@ -13,6 +13,7 @@ var trait = function (req, res, query) {
 	var pseudo; 
 	var opposant;
 	var profil_user;
+	var affichage_phrase;
 	var contenu;
 	var profil_opposant;
 	var contenu_opposant;
@@ -49,28 +50,36 @@ var trait = function (req, res, query) {
 	console.log(query.opposant);
 	console.log(query.pseudo);
 
-	for(h = 0 ; h < contenu.length ; h++) {
+	for(h = 0 ; h < contenu_opposant.length ; h++) {
 		console.log("la" );
-		console.log("opposant: "+contenu[h].contact);
-		if(query.opposant === contenu[h].contact) {
-			console.log("opposant trouve !!!: "+contenu[h].contact);
+		if(query.pseudo === contenu_opposant[h].contact) {
 			// on a deja joué avec l'opposant
 			// ici on affiche le score, la precedente question, ...
 			//console.log(contenu_opposant[h].reponse;
-			for(k=0;k<contenu_opposant ; k++){
-			if(contenu_opposant[h].reponse !== "X") {
-			console.log(contenu_opposant[k].reponse);
-				var	attente     =   contenu_opposant[h].contact;
-				var	attente_r   =   contenu_opposant[h].reponse;
-				var	ma_reponse  =   contenu_opposant[h].ra;
-				var	attente_q   =   contenu_opposant[h].questions;
-				var	score       =   contenu_opposant[h].score;
-				var	donne = " Joueur "+ attente +" votre score est de " + score +" Reponse Attendu " + attente_r + " Question " + attente_q + "\n" ;
-				affichage_score = donne;
-
-				console.log(donne);
+			for(k = 0 ; k < contenu.length ; k++){
+				if (contenu[k].contact === query.opposant) {
+						console.log("SCORE:");
+						console.log(contenu[k].score);
+					if (contenu[k].ra === contenu_opposant[h].reponse) {
+						contenu[k].score = contenu[k].score + 1;
+						console.log(contenu[k].score);
+						affichage_phrase = "Felicitation tu as trouvé la reponse de ton ami votre score augmente de 1."
+						affichage_score = "Votre score est desormais de :" +contenu[k].score;
+					}else if (contenu[k].ra !== contenu_opposant[h].reponse) {
+						affichage_phrase = "Mince ! tu n'as pas trouvé la reponse de ton ami votre score n'augmente pas."
+					}
+				}	
+			}
+				if(contenu_opposant[h].reponse !== "X" ) {
+					var	attente     =   contenu_opposant[h].contact;
+					var	attente_r   =   contenu_opposant[h].reponse;
+					var	ma_reponse  =   contenu_opposant[h].ra;
+					var	attente_q   =   contenu_opposant[h].questions;
+					var	score       =   contenu_opposant[h].score;
+					
+				
 				// si c'est la premiere fois qu'on joue avec, on va directement lui poser la question
-			} else if(contenu_opposant[h].reponse === "X" || Number.isInteger(contenu[h].ra) === true ) {
+			} else if(contenu_opposant[h].reponse === "X" || Number.isInteger(contenu[h].reponse) === true) {
 				page=fs.readFileSync("page_repond_q.html","utf-8");
 				nbr_question = contenu_opposant[h].questions.length;
 				console.log(nbr_question);
@@ -84,7 +93,6 @@ var trait = function (req, res, query) {
 
 				for (j=0;j<question[i].reponses.length;j++) {
 					reponse1 = question[i].reponses[j];
-					contenu_questions= JSON.stringify(question);
 					reponse = reponse + "<a href=req_poser_q?pseudo=" + query.pseudo +"&question="+numero_question+ "&opposant=" +query.opposant +"&reponse="+j+"><button>"+reponse1+"</button></a>";
 				}
 
@@ -94,17 +102,21 @@ var trait = function (req, res, query) {
 				 */
 
 			}
-			}
+			//}
 		}
 		//break;
 	}
 
+	profil_user = JSON.stringify(contenu);
+	fs.writeFileSync(query.pseudo+".json",profil_user,"UTF-8");
 
 
+	profil_opposant = JSON.stringify(contenu_opposant);
+	fs.writeFileSync(query.opposant+".json",profil_opposant,"UTF-8");
 
 	marqueurs = {};
-
 	marqueurs.affichage_score= affichage_score;
+	marqueurs.affichage_phrase = affichage_phrase;
 	marqueurs.question = choix_question;
 	marqueurs.reponse = reponse;
 	marqueurs.opposant = query.opposant;

@@ -62,12 +62,12 @@ var trait = function (req, res, query) {
 				console.log(reponse_attendu);
 			}
 		}
-	for( j = 0 ; j < contenu_opposant.length ; j++) {
+	/*for( j = 0 ; j < contenu_opposant.length ; j++) {
 		console.log("test");
 		if(contenu_opposant[j].contact === query.pseudo){
 			contenu_opposant[j].reponse = reponse_attendu;
 		}
-	}
+	}*/
 	profil_joueur=JSON.stringify(contenu_joueur);
 	fs.writeFileSync(query.pseudo+".json",profil_joueur,"utf-8");
 
@@ -101,7 +101,7 @@ var trait = function (req, res, query) {
 		ma_reponse  =   contenu[h].ra;
 		attente_q   =   contenu[h].questions;
 		score       =   contenu[h].score;
-		donne       =   (h+1) + " Joueur " + attente +"votre score est de " + score +" Reponse Attendu " + attente_r + " Question " + attente_q + "\n" ;
+		donne       =   " Joueur " + attente +"votre score est de " + score +" Reponse Attendu " + attente_r + " Question " + attente_q + "\n" ;
 		contacts    = contacts +" "+ donne +"<br> " ;
 		if(attente_r !== "X") {
 			nom  = nom + " " + attente+"<br>" ;
