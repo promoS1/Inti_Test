@@ -15,34 +15,36 @@ var trait = function (req, res, query) {
 	var questions;
 	var contenu;
 
+
 	// ON LIT LES QUESTIONS 
 
-	contenu_fichier = fs.readFileSync("../Inti_Test/questions.json", 'utf-8');
-	listeQuestions = JSON.parse(contenu_fichier);
 
-	questions = "";
+	contenu_fichier = fs.readFileSync("../questions.json", 'utf-8');
+	questions = JSON.parse(contenu_fichier);
 
-	if(trouve === true) {
+	question = query.question;
+	var reponse1 = query.choix1;
+	var reponse2 = query.choix2;
+	var reponse3 = query.choix3;
+	
+		listeQuestions = {};
+		listeQuestions.question = query.question;
+		listeQuestions.reponses = [];
+		listeQuestions.reponses.push(reponse1);
+		listeQuestions.reponses.push(reponse2);
+		listeQuestions.reponses.push(reponse3);
+		questions[questions.length] = listeQuestions
 
-		// SI CREATION PAS OK, ON REAFFICHE PAGE FORMULAIRE AVEC ERREUR
+	
+	
+	
+	contenu_fichier = JSON.stringify(listeQuestions);
+	fs.writeFileSync("../questions.json", contenu_fichier, 'utf-8');
 
-		page = fs.readFileSync('page_cree_q.html', 'utf-8');
 
-		marqueurs = {};
-		marqueurs.erreur = "ERREUR : cette question existe déjà";
-		marqueurs.question = query.question;
-		page = page.supplant(marqueurs);
 
-	} else { 
-		contenu_fichier = JSON.stringify(listeQuestions);
 
-		fs.writeFileSync("questions.json", contenu_fichier, 'utf-8');
-
-		contenu = JSON.stringify(questions);
-		fs.writeFileSync(query.questions+".json",contenu,"utf-8");
-
-		page = fs.readFileSync('page_confirmation_q.html','UTF-8');
-	}
+	page = fs.readFileSync('page_confirmation_q.html','UTF-8');
 
 	// AFFICHAGE DE LA PAGE D'ACCUEIL
 

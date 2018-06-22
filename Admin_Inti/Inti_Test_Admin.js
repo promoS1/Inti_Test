@@ -11,14 +11,14 @@ var fs = require("fs");
 // Declaration des differents modules correspondant a chaque action
 
 var req_commencer_admin  = require("./req_commencer_admin.js");
-var req_static = require("./req_static.js");
-var req_erreur = require("./req_erreur.js");
+var req_static = require("../req_static.js");
+var req_erreur = require("../req_erreur.js");
 
 
 //GERER LA CREATION DE QUESTIONS
 
 var req_cree_q = require("./req_cree_q.js");
-var req_annuler_q = require("./req_annuler.js");
+var req_annuler_q = require("./req_annuler_q.js");
 var req_confirmer_q = require("./req_confirmer_q.js");
 var req_retour_accueil_admin_q = require("./req_retour_accueil_admin_q.js");
 
@@ -66,7 +66,7 @@ var traite_requete = function ( req, res) {
 			case '/req_cree_q':
 				req_cree_q(req, res, query);
 				break;
-		/*	case '/req_confirmer_q':
+			case '/req_confirmer_q':
 				req_confirmer_q(req, res, query);
 				break;
 			case '/req_retour_accueil_admin_q':
@@ -93,7 +93,7 @@ var traite_requete = function ( req, res) {
 			case '/req_retour_accueil_admin_m':
 				req_retour_accueil_admin_m(req, res, query);
 				break;
-			case '/req_afficher_liste_q':
+		/*	case '/req_afficher_liste_q':
 				req_afficher_liste_q(req, res, query);
 				break;
 			case '/req_modifier_q':
