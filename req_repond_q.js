@@ -42,14 +42,14 @@ var trait = function (req, res, query) {
 
 	//VERIFIER SI JOUER AVEC LA PERSONNE 
 
-	for(h = 0 ; h < contenu.length ; h++) {
-		console.log("opposant: "+contenu[h].contact);
-		if(query.opposant === contenu[h].contact) {
-				nbr_question = contenu[h].questions.length;
+	for(h = 0 ; h < contenu_opposant.length ; h++) {
+		console.log("opposant: "+contenu_opposant[h].contact);
+		if(query.pseudo === contenu_opposant[h].contact) {
+				nbr_question = contenu_opposant[h].questions.length;
 				console.log(nbr_question);
-				i= contenu[h].questions[contenu[h].questions.length-1];
+				i= contenu_opposant[h].questions[contenu_opposant[h].questions.length-1];
 				console.log(i);
-				console.log(contenu[h].questions);
+				console.log(contenu_opposant[h].questions);
 				var numero_question = i;
 				choix_question = question[i].question;
 				console.log("Num de question : "+choix_question);

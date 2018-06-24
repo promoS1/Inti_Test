@@ -30,7 +30,6 @@ var trait = function (req, res, query) {
 	var donne;
 	var attente;	
 	var ma_reponse;
-	var contacts;
 	var score;
 	var opposant;
 	var nom;
@@ -74,44 +73,58 @@ var trait = function (req, res, query) {
 		adversaires = JSON.parse(fs.readFileSync(query.pseudo+".json","UTF-8"));
 
 		// AFFICHAGE DES MEMBES A DEFIER
-		
-		pseudos = "";
-        contacts= "";
-		opposant="";
-		ligne_nom_joueur = "";
 
-		for(j = 0 ; j <listeMembres.length ; j++ ) {
-			ligne_nom_joueur =(j+1) + " joueur " + listeMembres[j].pseudo +"\n";
-			if (query.pseudo !== listeMembres[j].pseudo){
-				pseudos = pseudos + ligne_nom_joueur + "<a href=req_init_defi?pseudo="+query.pseudo+"&opposant="+listeMembres[j].pseudo+">defier</a> " + "<br>";
-			}opposant = listeMembres[j].pseudo ;
-		}
-		//AFFICHAGE DES MEMBRES EN ATTENTE 
-		
 		nom = "";
 		autre_nom = "";
 		affichage_que = "";
 		en_attente= "";
+
+		pseudos = "";
+		opposant="";
+		ligne_nom_joueur = "";
+		var trouve = false;
+		for(j = 0 ; j <listeMembres.length ; j++ ) {
+			if( listeMembres[j].pseudo === query.pseudo){
+				continue;
+			}
+			trouve = false;
+			ligne_nom_joueur =" joueur " + listeMembres[j].pseudo + " " +"\n";
+			console.log("boucle 1:" + ligne_nom_joueur);
+
+			//AFFICHAGE DES MEMBRES EN ATTENTE 
+
+			for(h = 0 ; h < adversaires.length ; h++) {
+				console.log("boucle 2: " + adversaires[h].contact);
+				if(listeMembres[j].pseudo ==  adversaires[h].contact ){
+					trouve = true;  
+					console.log("pseudos trouve : " + pseudos);
+					break;
+				}
+			}
+			if (trouve == false){
+				pseudos = pseudos + ligne_nom_joueur + "<a href=req_init_defi?pseudo="+query.pseudo+"&opposant="+listeMembres[j].pseudo+">defier</a> " + "<br> \n";
+			}
+		}
+
 		for(h = 0 ; h < adversaires.length ; h++) {
+			console.log("boucle 2: " + adversaires[h].contact);
 			attente  	=	adversaires[h].contact  +"\n";
 			attente_r	=	adversaires[h].reponse; 
-			ma_reponse	=	adversaires[h].ra;
-			attente_q	=	adversaires[h].questions;
-			score		=	adversaires[h].score;
-			donne 		=	(h+1) + " Joueur " + attente +"votre score est de " + score +" Reponse Attendu " + attente_r + " Question " + attente_q + "\n" ; 
-			contacts	= contacts +" "+ donne +"<br> " ;
+			//si il ya un "X" c'est que nous avons deja defier l'adversaire
+			//si c'est un numero c'est que l'adversaire a aumoin repondu une fois 
 			if(attente_r === "X" || Number.isInteger(adversaires[h].reponse) === true) {
 				nom  = nom + " " + attente+"<br>" ;
 				en_attente = nom ;
-			} else if(attente_r !== "X"){
-			autre_nom = autre_nom + " " + attente + "<a href=req_cont_defi?pseudo="+query.pseudo+"&opposant="+  attente+">defier</a> "+"<br>" ;
-				affichage_que = autre_nom +" ";
-	
+				console.log("en_attente"+en_attente);
 			}
+			else if(attente_r == ""){
+				autre_nom = autre_nom + " " + attente + "<a href=req_cont_defi?pseudo="+query.pseudo+"&opposant="+  attente+">defier</a> "+"<br>" ;
+				affichage_que = autre_nom +" ";
+				console.log("boucle 3: " + adversaires[h].contact);
 
+			}
 		}
-
-	}
+	} 
 
 
 	marqueurs = {};
