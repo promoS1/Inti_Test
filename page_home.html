@@ -1,98 +1,61 @@
 <!DOCTYPE html">
 <html lang="fr">
-<head>
-<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
-<title>page home</title>
-<style type="text/css"> 
-body
-{
-  margin: 10px 0 ;
-    padding: 0 ;
-	  text-align: center ;
-	 font: 0.8em "Trebuchet MS", helvetica, sans-serif ;
-	 	background: #dea ;
-	 }
-	  div#conteneur
-	  {
-	    width: 770px ;
-		  margin: 0 auto ;
-		    text-align: left ;
-			 border: 2px solid #ab4 ;
-			 	background: #fff ;
-			}
-h1#header
-{
-  height: 258px ;
-  background:url( https://www.intechinfo.fr/wp-content/uploads/2015/11/logo-IN-TECH-ecole-informatique-retina.jpg) no-repeat left top;
+	<head>
+		<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+		<title>page home</title>
+		<link href="css/style.css" rel="stylesheet">
+	</head>
 
-  }
-  pre
-  {
-    overflow: auto ;
-	}
- div#milieu  {
-   width: 15em;
-     border: 1px solid #333;
-	   box-shadow: 8px 8px 5px #444;
-	     padding: 8px 12px;
-		   background-image: linear-gradient(180deg, #fff, #ddd 40%, #ccc);
-	float:left;
-  height: 350px ;
-	
-	}
+	<body>
+		<div id="conteneur">    
+			<a href="/">
+				<img border="0" alt="IntiTest" src="logo_intitest.jpg" width="236" height="175">
+			</a>
+			<ul id="menu">
+				<div id="milieu">
+					<h2>Tous Les Amis </h2>
+					<div id="deb" >{pseudos}</div>
+				</div>
 
+				<div id="milieu"> <!-- Sort du flux car float:left-->
+					<h2>regles du Jeu</h2>
+					<div id="mil" >
+						<h3>les regles du Jeu sont </h3>
+						<p>1- vous devez repondre au questions. </p>
+						<p>2- vous pouvez defier vos amis en leur envoyant des questions.   </p>
+						<p>3- vos amis peuvent vous defier en vous envoyant des questions.  </p>
+						<p>chaques Joueurs ce doit d'etre sincere dans ses reponses, </p>
+						<p>le but des defis est de pouvoir repondre aux questions comme le fait le defieur. </p>
+						<p> </p>
+					</div>
+				</div>
+				<div id="milieu"> <!-- Sort du flux car float:left-->
+					<h2>Jeu</h2>
 
-</style>
-</head>
+					<div id="droit" >
+						<h3> Question posée (En attente...)  </h3>
+						{en_attente}
+					</div>
+					<div id="droit" >
 
-<body>
-<div id="conteneur">    
-<h1 id="header"><a href=http://localhost:5000/req_retourHome?pseudo=zino title="Bienvenue a Inti_test"><span>Inti_test</span></a></h1>
-<ul id="menu">
-<div id="milieu">
-<h2>Tous Les Amis </h2>
-<div id="deb" >{pseudos}</div>
-</div>
+						<h3>Rependre ou relancer le defi </h3>
+						{affichage_que}
+					</div>
+				</div>
 
-<div id="milieu"> <!-- Sort du flux car float:left-->
-<h2>regles du Jeu</h2>
-<div id="mil" >
-<h3>les regles du Jeu sont </h3>
-<p>1- vous devez repondre au questions. </p>
-<p>2- vous pouvez defier vos amis en leur envoyant des questions.   </p>
-<p>3- vos amis peuvent vous defier en vous envoyant des questions.  </p>
-<p>chaques Joueurs ce doit d'etre sincere dans ses reponses, </p>
-<p>le but des defis est de pouvoir repondre aux questions comme le fait le defieur. </p>
-<p> </p>
-</div>
-</div>
-<div id="milieu"> <!-- Sort du flux car float:left-->
-<h2>Jeu</h2>
+		</div>
 
-<div id="droit" >
-<h3> Question posée (En attente...)  </h3>
-{en_attente}
-</div>
-<div id="droit" >
+		</div>
+		<div id="contenu">
 
-<h3>Rependre ou relancer le defi </h3>
-{affichage_que}
-</div>
-</div>
+			<a href="http://localhost:5000" ><span>Deconnexion</span></a>
+		</div>
 
-</div>
-
-</div>
-<div id="contenu">
-<h2>Un titre</h2>
-<p>Un paragraphe</p>
-</div>
-
-<p id="footer">IntechInfo</p>
+		<p id="footer">IntechInfo</p>
 
 
 
-</body>
+	</body>
 </html>
 
 
